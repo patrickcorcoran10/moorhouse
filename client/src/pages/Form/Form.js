@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+// import axios from 'axios';
 
 export default class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // inputs: {
                 companyName: '',
                 totalEmployees: '',
                 avgCostPerEmployee: '',
@@ -12,8 +12,6 @@ export default class Form extends Component {
                 analyzingData: '',
                 dataBreachRisk: '',
                 avgEmails: ''
-            // }
-
         }
         this.acceptCompanyName = this.acceptCompanyName.bind(this);
         this.acceptTotalEmployees = this.acceptTotalEmployees.bind(this);
@@ -22,6 +20,8 @@ export default class Form extends Component {
         this.acceptAnalyzingData = this.acceptAnalyzingData.bind(this);
         this.acceptDataBreachRisk = this.acceptDataBreachRisk.bind(this);
         this.acceptAvgEmails = this.acceptAvgEmails.bind(this);
+        this.submit = this.submit.bind(this);
+        this.reset = this.reset.bind(this);
     };
     // First Page Functions
     acceptCompanyName = e => {
@@ -61,8 +61,47 @@ export default class Form extends Component {
                 avgEmails: this.refs.avgEmails.value
         })
     };
+    // Buttons and Console.logging
     componentDidUpdate() {
         console.log(this.state)
+    };
+
+    submit = e => {
+        e.preventDefault();
+        console.log('we are submitting')
+        // axios.post('/api/submit', {
+        //     companyName: this.refs.companyName.value,
+        //     totalEmployees: this.refs.totalEmployees.value,
+        //     avgCostPerEmployee: this.refs.avgCostPerEmployee.value,
+        //     collectingData: this.refs.collectingData.value,
+        //     analyzingData: this.refs.analyzingData.value,
+        //     dataBreachRisk: this.refs.dataBreachRisk.value,
+        //     avgEmails: this.refs.avgEmails.value
+        // })
+        // .then(res => {
+        //     console.log(res)
+        // });
+    };
+
+    reset = e => {
+        e.preventDefault();
+        console.log("we are resetting");
+        this.refs.companyName.value = '';
+        this.refs.totalEmployees.value = '';
+        this.refs.avgCostPerEmployee.value = '';
+        this.refs.collectingData.value = '';
+        this.refs.analyzingData.value = '';
+        this.refs.dataBreachRisk.value = '';
+        this.refs.avgEmails.value = '';
+        this.setState({
+            companyName: '',
+            totalEmployees: '',
+            avgCostPerEmployee: '',
+            collectingData: '',
+            analyzingData: '',
+            dataBreachRisk: '',
+            avgEmails: ''
+        });
     };
 
 
@@ -119,6 +158,18 @@ export default class Form extends Component {
                   <input ref='avgEmails' placeholder='Benchmark is 304' onChange={this.acceptAvgEmails}/>
               </div>
               <div className='col-md-2'>
+              </div>
+          </div>
+          <hr/>
+          <div className='row'>
+              <div className='col-md-4'>
+              </div>
+              <div className='col-md-4'>
+                <button onClick={this.submit}>Submit</button>  
+                <hr/>
+                <button onClick={this.reset}>Reset</button>
+              </div>
+              <div className='col-md-4'>
               </div>
           </div>
       </div>
