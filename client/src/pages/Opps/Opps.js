@@ -21,24 +21,28 @@ const styles = theme => ({
   });
   
   let id = 0;
-  function createData(name, calories, fat, carbs, protein) {
+  function createData(companyName, email, employees, carbs, protein) {
     id += 1;
-    return { id, name, calories, fat, carbs, protein };
+    return { id, companyName, email, employees, carbs, protein };
   }
   
   const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
+    createData('White Sox', 'john.doe@aol.com', 25, 24, 4.0),
+    createData('Cubs', 'john.doe@aol.com', 25, 37, 4.3),
+    createData('Twins', 'john.doe@aol.com', 25, 24, 6.0),
+    createData('Indians', 'john.doe@aol.com', 25, 67, 4.3),
+    createData('Brewers', 'john.doe@aol.com', 25, 49, 3.9),
   ];
   
   function Opps(props) {
     const { classes } = props;
   
     return (
+        
+            
+        
       <Paper className={classes.root}>
+      <h6>Current Opportunities</h6>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
@@ -53,10 +57,10 @@ const styles = theme => ({
             {rows.map(row => (
               <TableRow key={row.id}>
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {row.companyName}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
+                <TableCell align="right">{row.email}</TableCell>
+                <TableCell align="right">{row.employees}</TableCell>
                 <TableCell align="right">{row.carbs}</TableCell>
                 <TableCell align="right">{row.protein}</TableCell>
               </TableRow>

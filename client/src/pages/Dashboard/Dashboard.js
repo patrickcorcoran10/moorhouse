@@ -3,6 +3,12 @@ import Graph from '../../components/Graph/Graph';
 import '../../pages/Dashboard/Dashboard.css';
 
 export default class Dashboard extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            inputs: {}
+        }
+    };
   render() {
     return (
       <div className='container'>

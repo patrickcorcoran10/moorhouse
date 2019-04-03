@@ -1,6 +1,6 @@
 .box {
     background-color: whitesmoke;
-    padding-bottom: 100px;
+    padding-bottom: 50px;
     padding-top: 30px;
 }
 h6 {
@@ -8,6 +8,6 @@ h6 {
 }
 .container {
     background-color: white;
-    padding-bottom: 400px;
-    padding-top: 100px;
+    padding-bottom: 200px;
+    padding-top: 10px;
 }
