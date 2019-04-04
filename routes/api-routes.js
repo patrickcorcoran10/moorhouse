@@ -1,8 +1,8 @@
 const db = require('../models');
 
 module.exports = function(app) {
-    app.post('/api/submit', function(req, res) {
-        db.moorhouses.create({
+    app.post('/api/moorhouse', function(req, res) {
+        db.Moorhouses.create({
             companyName: req.body.companyName,
             totalEmployees: req.body.totalEmployees,
             avgCostPerEmployee: req.body.avgCostPerEmployee,
@@ -12,6 +12,12 @@ module.exports = function(app) {
             avgEmails: req.body.avgEmails,
         })
         .then(function(dbData) {
+            res.json(dbData)
+        });
+    });
+
+    app.get('/api/opps', function(req, res) {
+        db.Moorhouses.findAll({}).then(function(dbData) {
             res.json(dbData)
         });
     });

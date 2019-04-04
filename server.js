@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'production') {
 
 const db = require('./models');
 
-require('./routes/api-routes.js')(app);
+require('./routes/api-routes')(app);
 
 app.get('*', function (req, res) {
     const index = path.join(__dirname, 'build', 'index.html');

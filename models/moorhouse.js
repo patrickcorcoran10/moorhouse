@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    const Moorhouse = sequelize.define('moorhouse', {
+    const Moorhouse = sequelize.define('Moorhouses', {
         companyName: DataTypes.STRING,
         totalEmployees: DataTypes.STRING,
         avgCostPerEmployee: DataTypes.STRING,
@@ -10,4 +10,4 @@ module.exports = function(sequelize, DataTypes) {
         email: DataTypes.STRING
     });
     return Moorhouse;
-}
+};

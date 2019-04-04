@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 // import axios from 'axios';
+import superagent from 'superagent';
 
 export default class Form extends Component {
     constructor(props) {
@@ -68,19 +69,40 @@ export default class Form extends Component {
 
     submit = e => {
         e.preventDefault();
-        console.log('we are submitting')
-        // axios.post('/api/submit', {
-        //     companyName: this.refs.companyName.value,
-        //     totalEmployees: this.refs.totalEmployees.value,
-        //     avgCostPerEmployee: this.refs.avgCostPerEmployee.value,
-        //     collectingData: this.refs.collectingData.value,
-        //     analyzingData: this.refs.analyzingData.value,
-        //     dataBreachRisk: this.refs.dataBreachRisk.value,
-        //     avgEmails: this.refs.avgEmails.value
-        // })
-        // .then(res => {
-        //     console.log(res)
-        // });
+        console.log('we are submitting');
+            superagent
+                .post('/api/moorhouse')
+                .send({
+                    companyName: this.refs.companyName.value,
+                    totalEmployees: this.refs.totalEmployees.value,
+                    avgCostPerEmployee: this.refs.avgCostPerEmployee.value,
+                    collectingData: this.refs.collectingData.value,
+                    analyzingData: this.refs.analyzingData.value,
+                    dataBreachRisk: this.refs.dataBreachRisk.value,
+                    avgEmails: this.refs.avgEmails.value
+                })
+                .end((err, res) => {
+                    console.log(res);
+                });
+
+                console.log("we are resetting");
+                this.refs.companyName.value = '';
+                this.refs.totalEmployees.value = '';
+                this.refs.avgCostPerEmployee.value = '';
+                this.refs.collectingData.value = '';
+                this.refs.analyzingData.value = '';
+                this.refs.dataBreachRisk.value = '';
+                this.refs.avgEmails.value = '';
+                this.setState({
+                    companyName: '',
+                    totalEmployees: '',
+                    avgCostPerEmployee: '',
+                    collectingData: '',
+                    analyzingData: '',
+                    dataBreachRisk: '',
+                    avgEmails: ''
+                });
+
     };
 
     reset = e => {
@@ -102,6 +124,14 @@ export default class Form extends Component {
             dataBreachRisk: '',
             avgEmails: ''
         });
+        // // componentDidMount() {
+        //     superagent
+        //       .get('/api/opps')
+        //       .send({})
+        //       .end((err, res) => {
+        //           console.log(res)
+        //       })
+        // //   };
     };
 
 
