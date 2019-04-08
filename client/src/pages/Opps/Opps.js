@@ -1,83 +1,83 @@
-import React from 'react';
-// import '../Opportunities/Opportunities.css';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-// import superagent from 'superagent';
+import React, { Component } from 'react';
+import '../Opps/Opps.css';
+import request from 'superagent';
 
-const styles = theme => ({
-    root: {
-      width: '100%',
-      marginTop: theme.spacing.unit * 3,
-      overflowX: 'auto',
-    },
-    table: {
-      minWidth: 700,
-    },
-  });
-  
-  
-  let id = 0;
-  function createData(companyName, email, employees, carbs, protein) {
-    id += 1;
-    return { id, companyName, email, employees, carbs, protein };
-  }
-  
-  const rows = [
-    createData('White Sox', 'john.doe@aol.com', 25, 24, 4.0),
-    createData('Cubs', 'john.doe@aol.com', 25, 37, 4.3),
-    createData('Twins', 'john.doe@aol.com', 25, 24, 6.0),
-    createData('Indians', 'john.doe@aol.com', 25, 67, 4.3),
-    createData('Brewers', 'john.doe@aol.com', 25, 49, 3.9),
-  ];
 
-  
-  
-  function Opps(props) {
-    
-    const { classes } = props;
-  
-    return (
-        
-            
-        
-      <Paper className={classes.root}>
-      <h6>Current Opportunities</h6>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Company Name</TableCell>
-              <TableCell align="right">Email</TableCell>
-              <TableCell align="right">Employees</TableCell>
-              <TableCell align="right">Revenue</TableCell>
-              <TableCell align="right">Revenue Potential</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(row => (
-              <TableRow key={row.id}>
-                <TableCell component="th" scope="row">
-                  {row.companyName}
-                </TableCell>
-                <TableCell align="right">{row.email}</TableCell>
-                <TableCell align="right">{row.employees}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Paper>
-    );
-  }
-  
-  Opps.propTypes = {
-    classes: PropTypes.object.isRequired,
+export default class Opps extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputs: {}
+    };
   };
-  
-  export default withStyles(styles)(Opps);
+  componentDidMount() {
+    console.log("We are now mounted on the Opps page");
+    request
+      .get('/api/opps')
+      .then(res => {
+          console.log(res.body)
+          this.setState({
+            inputs: res.body
+          })
+      })
+      .catch(err => {
+          console.log(err)
+      });
+      
+
+  };
+
+  delete = e => {
+    alert("This will be a modal and ask if you'd like to delete this file")
+  };
+
+  view = e => {
+    alert('This will send us via to a page displaying a graph giving further details about the company in question.')
+  };
+
+  render() {
+    console.log(this.state)
+    return (
+      <div className='container'>
+        <div className='row'>
+          <div className='col-md-1'>
+          </div>
+          <div className='col-md-10'>
+            <table className='table'>
+              <thead>
+                <tr>
+                  <th>Company</th>
+                  <th>Email</th>
+                  <th>Employees</th>
+                  <th>Revenue</th>
+                  <th>Revenue Potential</th>
+                  <th>View</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              
+              {/* {this.state.data.map((data, index) => (
+                <tbody>
+                <tr key={data.id}>
+                  <td>{data.companyName}</td>
+                  <td>{data.email}</td>
+                  <td>{data.totalEmployees}</td>
+                  <td>Revenue</td>
+                  <td>Potential Revenue</td>
+                  <td><button value={data.id} onClick={this.view.bind(this)}>View</button></td>
+                  <td><button value={data.id} onClick={this.delete.bind(this)}>Delete</button></td>
+                </tr>
+                </tbody>
+              ))} */}
+                
+              
+            </table>
+          </div>
+          <div className='col-md-1'>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+

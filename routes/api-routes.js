@@ -18,7 +18,7 @@ module.exports = function(app) {
 
     app.get('/api/opps', function(req, res) {
         db.Moorhouses.findAll({}).then(function(dbData) {
-            res.json(dbData)
+            res.json(dbData);
         });
     });
 }
