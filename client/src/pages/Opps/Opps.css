@@ -1,7 +1,11 @@
 .table {
     background-color: lightblue;
+    font-size: 12px;
 }
 
 thead {
     border-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
+

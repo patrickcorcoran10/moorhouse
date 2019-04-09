@@ -7,7 +7,8 @@ module.exports = function(sequelize, DataTypes) {
         analyzingData: DataTypes.STRING,
         dataBreachRisk: DataTypes.STRING,
         avgEmails: DataTypes.STRING,
-        email: DataTypes.STRING
+        email: DataTypes.STRING,
+        completed: DataTypes.BOOLEAN,
     });
     return Moorhouse;
 };

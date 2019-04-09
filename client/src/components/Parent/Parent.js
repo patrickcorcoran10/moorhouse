@@ -6,6 +6,14 @@ import Form from '../../pages/Form/Form';
 import Opps from '../../pages/Opps/Opps';
 
 export default class Parent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputs: {
+        
+      }
+    }
+  }
   render() {
     return (
       <div>
