@@ -40,23 +40,22 @@ export default class Opps extends Component {
       .set('Accept', 'application/json')
       .end(function(err, res) {
         console.log(res);
-        alert('You have deleted a record.')
+        alert('You have deleted a record.');
       })
       this.componentDidMount();
   };
 
   view = e => {
     e.preventDefault();
-    alert('This will send us via to a page displaying a graph giving further details about the company in question.');
     var viewID = e.target.value;
     console.log(viewID);
-    this.props.history.push('/view');
+    this.props.history.push('/company-view');
     this.props.click(viewID);
   };
 
   complete = e => {
     e.preventDefault();
-    alert('This will update the database to move this record to completed, and out of the opps page view')
+    // Need to write an UPDATE Route to change completed to TRUE
   }
 
   render() {
@@ -85,9 +84,9 @@ export default class Opps extends Component {
                   <td>{data.totalEmployees}</td>
                   <td>{data.revenue}</td>
                   <td>{data.potentialRevenue}</td> 
-                  <td><button value={data.id} onClick={this.view.bind(this)}>Detailed View</button></td>
-                  <td><button value={data.id} onClick={this.complete.bind(this)}>Mark Complete</button></td>
-                  <td><button value={data.id} onClick={this.delete.bind(this)}>Delete</button></td> 
+                  <td><button type="button" className="btn btn-outline-dark" value={data.id} onClick={this.view.bind(this)}>Detailed View</button></td>
+                  <td><button type="button" className="btn btn-outline-success" value={data.id} onClick={this.complete.bind(this)}>Mark Complete</button></td>
+                  <td><button type="button" className="btn btn-outline-danger" value={data.id} onClick={this.delete.bind(this)}>Delete this Record</button></td> 
                 </tr>
                 ))}
               </tbody>

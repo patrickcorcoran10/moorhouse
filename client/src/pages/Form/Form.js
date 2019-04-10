@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import superagent from 'superagent';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            inputs: {
                 companyName: '',
                 totalEmployees: '',
                 avgCostPerEmployee: '',
@@ -12,6 +14,8 @@ export default class Form extends Component {
                 analyzingData: '',
                 dataBreachRisk: '',
                 avgEmails: ''
+            },
+            modal: false
         }
         this.acceptCompanyName = this.acceptCompanyName.bind(this);
         this.acceptTotalEmployees = this.acceptTotalEmployees.bind(this);
@@ -20,8 +24,10 @@ export default class Form extends Component {
         this.acceptAnalyzingData = this.acceptAnalyzingData.bind(this);
         this.acceptDataBreachRisk = this.acceptDataBreachRisk.bind(this);
         this.acceptAvgEmails = this.acceptAvgEmails.bind(this);
+        this.acceptEmail = this.acceptEmail.bind(this);
         this.submit = this.submit.bind(this);
         this.reset = this.reset.bind(this);
+        this.toggle = this.toggle.bind(this);
     };
     // First Page Functions
     acceptCompanyName = e => {
@@ -61,6 +67,11 @@ export default class Form extends Component {
                 avgEmails: this.refs.avgEmails.value
         })
     };
+    acceptEmail = e => {
+        this.setState({
+            email: this.refs.email.value
+        })
+    }
     // Buttons and Console.logging
     componentDidUpdate() {
         console.log(this.state)
@@ -123,15 +134,13 @@ export default class Form extends Component {
             dataBreachRisk: '',
             avgEmails: ''
         });
-        // // componentDidMount() {
-        //     superagent
-        //       .get('/api/opps')
-        //       .send({})
-        //       .end((err, res) => {
-        //           console.log(res)
-        //       })
-        // //   };
+        
     };
+    toggle() {
+        this.setState(prevState => ({
+          modal: !prevState.modal
+        }));
+      }
 
 
   render() {
@@ -201,6 +210,22 @@ export default class Form extends Component {
               <div className='col-md-4'>
               </div>
           </div>
+          <div>
+                <Button color="success" onClick={this.toggle}>Submit</Button>
+                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                <ModalHeader toggle={this.toggle}>Thank you for your time!</ModalHeader>
+                <ModalBody>
+                    <p>This is where we intend to show a ROI. We will also show an Annual Savings.</p> 
+                    <p>We also intend to ask for an Email Address, which we will update the user's record with.</p>
+                    <p>Please provide your email address:</p>
+                    <input ref='email' placeholder="j.doe@provider.com" onChange={this.acceptEmail}></input>
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="success" onClick={this.toggle}>Submit</Button>{' '}
+                    <Button color="secondary" onClick={this.reset}>OK, but not for me.</Button>
+                </ModalFooter>
+                </Modal>
+            </div>
       </div>
     )
   }

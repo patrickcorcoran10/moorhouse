@@ -36,7 +36,7 @@ module.exports = function(app) {
     });
 
 // Get Route for Display Page
-    app.get('/api/display:id', function(req, res) {
+    app.get('/api/display', function(req, res) {
         db.Moorhouses.findAll({
             where: {
                 id: req.params.id
@@ -44,6 +44,6 @@ module.exports = function(app) {
         })
         .then(function(dbData) {
             res.json(dbData)
-        })
+        });
     });
 }

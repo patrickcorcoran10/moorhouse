@@ -3,9 +3,13 @@
     font-size: 12px;
 }
 
-thead {
+tbody {
     border-bottom: 2px;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.btn {
+    font-size: 10px;
 }
 
