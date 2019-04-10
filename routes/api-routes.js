@@ -24,7 +24,7 @@ module.exports = function(app) {
         });
     });
 // Delete Route for Opps Page
-    app.delete('/api/delete', function(req, res) {
+    app.delete('/api/delete:id', function(req, res) {
         db.Moorhouses.destroy({
             where: {
                 id: req.params.id

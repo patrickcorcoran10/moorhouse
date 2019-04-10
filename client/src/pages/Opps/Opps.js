@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../Opps/Opps.css';
 import request from 'superagent';
+import axios from 'axios';
 
 
 export default class Opps extends Component {
@@ -31,18 +32,25 @@ export default class Opps extends Component {
 
   delete = e => {
     e.preventDefault();
-    alert("This will be a modal and ask if you'd like to delete this file");
     var deleteID = e.target.value;
     console.log(deleteID);
-    request
-      .del('/api/delete')
-      .send({ id: deleteID })
-      .set('Accept', 'application/json')
-      .end(function(err, res) {
-        console.log(res);
-        alert('You have deleted a record.');
-      })
+    // request
+    //   .del('/api/delete')
+    //   .send({ id: deleteID })
+    //   .set('Accept', 'application/json')
+    //   .end(function(err, res) {
+    //     console.log(res);
+    //     alert('You have deleted a record.');
+    //   });
+    //   this.componentDidMount();
+    axios.delete('/api/delete'+deleteID)
+    .then((response) => {
       this.componentDidMount();
+    })
+    .catch(function(err) {
+      console.log(err)
+    });
+    alert('You have deleted a record.')
   };
 
   view = e => {
