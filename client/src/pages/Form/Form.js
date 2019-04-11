@@ -106,14 +106,17 @@ export default class Form extends Component {
                 this.refs.avgEmails.value = '';
                 this.refs.email.value = '';
                 this.setState({
-                    companyName: '',
-                    totalEmployees: '',
-                    avgCostPerEmployee: '',
-                    collectingData: '',
-                    analyzingData: '',
-                    dataBreachRisk: '',
-                    avgEmails: '',
-                    email: ''
+                    inputs: {
+                        companyName: '',
+                        totalEmployees: '',
+                        avgCostPerEmployee: '',
+                        collectingData: '',
+                        analyzingData: '',
+                        dataBreachRisk: '',
+                        avgEmails: '',
+                        email: ''
+                    },
+                    modal: false,
                 });
 
     };
@@ -207,15 +210,14 @@ export default class Form extends Component {
               <div className='col-md-4'>
               </div>
               <div className='col-md-4'>
-                <button onClick={this.toggle}>Submit</button>  
+                <Button color='success' onClick={this.toggle}>Submit</Button>  
                 <hr/>
-                <button onClick={this.reset}>Reset</button>
+                <Button color="danger" onClick={this.reset}>Reset</Button>
               </div>
               <div className='col-md-4'>
               </div>
           </div>
           <div>
-                <Button color="success" onClick={this.toggle}>Submit</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                 <ModalHeader toggle={this.toggle}>Thank you for your time!</ModalHeader>
                 <ModalBody>

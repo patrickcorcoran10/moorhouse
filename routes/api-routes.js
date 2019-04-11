@@ -11,6 +11,7 @@ module.exports = function(app) {
             analyzingData: req.body.analyzingData,
             dataBreachRisk: req.body.dataBreachRisk,
             avgEmails: req.body.avgEmails,
+            email: req.body.email,
             completed: false
         })
         .then(function(dbData) {
