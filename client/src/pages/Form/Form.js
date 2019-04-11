@@ -89,7 +89,8 @@ export default class Form extends Component {
                     collectingData: this.refs.collectingData.value,
                     analyzingData: this.refs.analyzingData.value,
                     dataBreachRisk: this.refs.dataBreachRisk.value,
-                    avgEmails: this.refs.avgEmails.value
+                    avgEmails: this.refs.avgEmails.value,
+                    email: this.refs.email.value
                 })
                 .end((err, res) => {
                     console.log(res);
@@ -103,6 +104,7 @@ export default class Form extends Component {
                 this.refs.analyzingData.value = '';
                 this.refs.dataBreachRisk.value = '';
                 this.refs.avgEmails.value = '';
+                this.refs.email.value = '';
                 this.setState({
                     companyName: '',
                     totalEmployees: '',
@@ -110,7 +112,8 @@ export default class Form extends Component {
                     collectingData: '',
                     analyzingData: '',
                     dataBreachRisk: '',
-                    avgEmails: ''
+                    avgEmails: '',
+                    email: ''
                 });
 
     };
@@ -132,7 +135,8 @@ export default class Form extends Component {
             collectingData: '',
             analyzingData: '',
             dataBreachRisk: '',
-            avgEmails: ''
+            avgEmails: '',
+            email: ''
         });
         
     };
@@ -203,7 +207,7 @@ export default class Form extends Component {
               <div className='col-md-4'>
               </div>
               <div className='col-md-4'>
-                <button onClick={this.submit}>Submit</button>  
+                <button onClick={this.toggle}>Submit</button>  
                 <hr/>
                 <button onClick={this.reset}>Reset</button>
               </div>
@@ -221,7 +225,7 @@ export default class Form extends Component {
                     <input ref='email' placeholder="j.doe@provider.com" onChange={this.acceptEmail}></input>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="success" onClick={this.toggle}>Submit</Button>{' '}
+                    <Button color="success" onClick={this.submit}>Submit</Button>{' '}
                     <Button color="secondary" onClick={this.reset}>OK, but not for me.</Button>
                 </ModalFooter>
                 </Modal>
