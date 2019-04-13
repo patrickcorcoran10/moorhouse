@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import superagent from 'superagent';
+import '../Form/Form.css';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default class Form extends Component {
@@ -76,6 +77,9 @@ export default class Form extends Component {
     componentDidUpdate() {
         console.log(this.state)
     };
+    calculations() {
+
+    };
 
     submit = e => {
         e.preventDefault();
@@ -90,7 +94,13 @@ export default class Form extends Component {
                     analyzingData: this.refs.analyzingData.value,
                     dataBreachRisk: this.refs.dataBreachRisk.value,
                     avgEmails: this.refs.avgEmails.value,
-                    email: this.refs.email.value
+                    email: this.refs.email.value,
+                    dataCollectionSavings: '',
+                    dataProcessingSavings: '',
+                    complienceAndSecuritySavings: '',
+                    automationSavings: '',
+                    annualCompanyValue: '',
+                    roi: ''
                 })
                 .end((err, res) => {
                     console.log(res);
@@ -151,6 +161,15 @@ export default class Form extends Component {
 
 
   render() {
+      const assumptions = {
+        emailCostPerEmployee: 1800,
+        chanceOfDataBreach: .025,
+        dataBreachCost: 1600000,
+        collectData: .17,
+        processData: .16,
+        annualHours: 2000
+      }
+      console.log(assumptions.collectData)
     return (
       <div className='container'>
           <div className='row'>
@@ -221,8 +240,8 @@ export default class Form extends Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                 <ModalHeader toggle={this.toggle}>Thank you for your time!</ModalHeader>
                 <ModalBody>
-                    <p>This is where we intend to show a ROI. We will also show an Annual Savings.</p> 
-                    <p>We also intend to ask for an Email Address, which we will update the user's record with.</p>
+                    <h5 className='modalText'>Annual Savings: ##</h5>
+                    <h5 className='modalText'>% Year ROI: </h5>
                     <p>Please provide your email address:</p>
                     <input ref='email' placeholder="j.doe@provider.com" onChange={this.acceptEmail}></input>
                 </ModalBody>

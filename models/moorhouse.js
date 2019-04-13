@@ -9,6 +9,13 @@ module.exports = function(sequelize, DataTypes) {
         avgEmails: DataTypes.STRING,
         email: DataTypes.STRING,
         completed: DataTypes.BOOLEAN,
+        dataCollectionSavings: DataTypes.STRING,
+        dataProcessingSavings: DataTypes.STRING,
+        complienceAndSecuritySavings: DataTypes.STRING,
+        automationSavings: DataTypes.STRING,
+        annualCompanyValue: DataTypes.STRING,
+        roi: DataTypes.STRING,
+        opportunity: DataTypes.BOOLEAN
     });
     return Moorhouse;
 };

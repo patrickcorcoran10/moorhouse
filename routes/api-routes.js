@@ -12,7 +12,14 @@ module.exports = function(app) {
             dataBreachRisk: req.body.dataBreachRisk,
             avgEmails: req.body.avgEmails,
             email: req.body.email,
-            completed: false
+            // dataCollectionSavings: req.body.dataCollectionSavings,
+            // dataProcessingSavings: req.body.dataProcessingSavings,
+            // complienceAndSecuritySavings: req.body.complienceAndSecuritySavings,
+            // automationSavings: req.body.automationSavings,
+            // annualCompanyValue: req.body.annualCompanyValue,
+            // roi: req.body.roi,
+            completed: false,
+            opportunity: true,
         })
         .then(function(dbData) {
             res.json(dbData)
@@ -46,5 +53,27 @@ module.exports = function(app) {
         .then(function(dbData) {
             res.json(dbData)
         });
+    });
+// Get Route for Dashboard that will display the Number of Records in the Database coded with "Opportunity"
+    app.get('/api/dashboard/number-of-opps', function(req, res) {
+        db.Moorhouses.findAll({
+            where: {
+                opportunity: true
+            }
+        })
+        .then(function(dbData) {
+            res.json(dbData)
+        });
+    });
+// Get Route for Dashboard Completed Records
+    app.get('/api/dashboard/number-of-completed', function(req, res) {
+        db.Moorhouses.findAll({
+            where: {
+                completed: true
+            }
+        })
+        .then(function(dbData) {
+            res.json(dbData)
+        })
     });
 }

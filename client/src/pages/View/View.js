@@ -14,24 +14,16 @@ import request from 'superagent';
 
     componentDidMount() {
         console.log("We are mounted on the display page with record: ", this.props.id);
-        
-        // axios.get('/api/display' + this.props.id)
-        // .then(res => {
-        //     let selected = res.data[0];
-        //     console.log(selected);
-        //     this.setState({
-        //         inputs: selected,
-        //         planSelect: res.data
-        //     });
-        //     console.log(this.state);
-        // })
         request
             .get('/api/display')
             .send({ id: this.props.id })
             .set('Accept', 'application/json')
             .then(res => {
                 console.log(res.body);
+                
              });
+        
+        
     };
 
     
