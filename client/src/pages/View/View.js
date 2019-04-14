@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Bar } from 'react-chartjs-2';
 import '../View/View.css';
 import request from 'superagent';
+import axios from 'axios';
 
  class View extends Component {
     constructor(props) {
@@ -14,14 +15,18 @@ import request from 'superagent';
 
     componentDidMount() {
         console.log("We are mounted on the display page with record: ", this.props.id);
-        request
-            .get('/api/display')
-            .send({ id: this.props.id })
-            .set('Accept', 'application/json')
-            .then(res => {
-                console.log(res.body);
+        // request
+        //     .get('/api/display')
+        //     .send({ id: this.props.id })
+        //     .set('Accept', 'application/json')
+        //     .then(res => {
+        //         console.log(res.body);
                 
-             });
+        //      });
+        axios.get('/api/display'+this.props.id)
+        .then(res => {
+            console.log(res.data)
+        })
         
         
     };

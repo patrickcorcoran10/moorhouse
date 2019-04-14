@@ -34,15 +34,6 @@ export default class Opps extends Component {
     e.preventDefault();
     var deleteID = e.target.value;
     console.log(deleteID);
-    // request
-    //   .del('/api/delete')
-    //   .send({ id: deleteID })
-    //   .set('Accept', 'application/json')
-    //   .end(function(err, res) {
-    //     console.log(res);
-    //     alert('You have deleted a record.');
-    //   });
-    //   this.componentDidMount();
     axios.delete('/api/delete'+deleteID)
     .then((response) => {
       this.componentDidMount();
@@ -63,7 +54,22 @@ export default class Opps extends Component {
 
   complete = e => {
     e.preventDefault();
-    // Need to write an UPDATE Route to change completed to TRUE
+    console.log('we are updating this record to complete');
+    let updateID = e.target.value;
+    console.log(updateID);
+    axios.put('/api/opps/complete'+ updateID, {
+      completed: true
+    })
+    .then(function(response) {
+      console.log(response)
+      this.componentDidMount();
+
+    })
+    .catch(function(error) {
+      console.log(error)
+    });
+
+
   }
 
   render() {

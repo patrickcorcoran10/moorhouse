@@ -5,9 +5,15 @@
 }
 h6 {
     text-align: center;
+
 }
 .container {
     background-color: white;
     padding-bottom: 200px;
     padding-top: 10px;
+}
+
+.number {
+    font-size: 30px;
+    color: blue;
 }

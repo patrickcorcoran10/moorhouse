@@ -27,7 +27,12 @@ module.exports = function(app) {
     });
 // Get Request for Opps Page
     app.get('/api/opps', function(req, res) {
-        db.Moorhouses.findAll({}).then(function(dbDataPoints) {
+        db.Moorhouses.findAll({
+            where: {
+                completed: false
+            }
+        })
+        .then(function(dbDataPoints) {
             res.json(dbDataPoints);
         });
     });
@@ -44,7 +49,7 @@ module.exports = function(app) {
     });
 
 // Get Route for Display Page
-    app.get('/api/display', function(req, res) {
+    app.get('/api/display:id', function(req, res) {
         db.Moorhouses.findAll({
             where: {
                 id: req.params.id
@@ -70,6 +75,19 @@ module.exports = function(app) {
         db.Moorhouses.findAll({
             where: {
                 completed: true
+            }
+        })
+        .then(function(dbData) {
+            res.json(dbData)
+        })
+    });
+// Update Route on the Opps page for Completed
+    app.put('/api/opps/complete:id', function(req, res) {
+        db.Moorhouses.update({
+            completed: true,
+        }, {
+            where: {
+                id: req.params.id
             }
         })
         .then(function(dbData) {
