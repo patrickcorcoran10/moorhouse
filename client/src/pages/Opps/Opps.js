@@ -8,7 +8,8 @@ export default class Opps extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputs: []
+      inputsOpps: [],
+      inputsCompleted: []
     };
     this.delete = this.delete.bind(this);
     this.complete = this.complete.bind(this);
@@ -21,12 +22,22 @@ export default class Opps extends Component {
       .get('/api/opps')
       .then(res => {
           this.setState({
-            inputs:  res.body 
+            inputsOpps:  res.body 
           })
       })
       .catch(err => {
           console.log(err)
+      });
+    request
+      .get('/api/opps/completed')
+      .then(res => {
+        this.setState({
+            inputsCompleted: res.body
+        })
       })
+      .catch(err => {
+        console.log(err)
+      });
 
   };
 
@@ -79,6 +90,7 @@ export default class Opps extends Component {
           <div className='col-md-1'>
           </div>
           <div className='col-md-10'>
+          <p>Currently Opportunities</p>
             <table className='table'>
               <tbody>
                 <tr>
@@ -91,7 +103,42 @@ export default class Opps extends Component {
                   <th>Complete</th>
                   <th>Delete</th>
                 </tr>
-                {this.state.inputs.map((data, index) => (
+                {this.state.inputsOpps.map((data, index) => (
+                <tr key={data.id}>
+                  <td>{data.companyName}</td>
+                  <td>{data.email}</td> 
+                  <td>{data.totalEmployees}</td>
+                  <td>{data.revenue}</td>
+                  <td>{data.potentialRevenue}</td> 
+                  <td><button type="button" className="btn btn-outline-dark" value={data.id} onClick={this.view.bind(this)}>Detailed View</button></td>
+                  <td><button type="button" className="btn btn-outline-success" value={data.id} onClick={this.complete.bind(this)}>Mark Complete</button></td>
+                  <td><button  className="btn btn-outline-danger" value={data.id} onClick={this.delete.bind(this)}>Delete this Record</button></td> 
+                </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className='col-md-1'>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-md-1'>
+          </div>
+          <div className='col-md-10'>
+              <p>Completed Opportunities</p>
+              <table className='table'>
+              <tbody>
+                <tr>
+                  <th>Company</th>
+                  <th>Email</th> 
+                  <th>Employees</th>
+                  <th>Revenue</th>
+                  <th>Revenue Generated</th>
+                  <th>View</th>
+                  <th>Complete</th>
+                  <th>Delete</th>
+                </tr>
+                {this.state.inputsCompleted.map((data, index) => (
                 <tr key={data.id}>
                   <td>{data.companyName}</td>
                   <td>{data.email}</td> 

@@ -12,7 +12,7 @@ export default class Dashboard extends Component {
         }
     };
 
-    componentDidMount() {
+    componentWillMount() {
         console.log('We are mounted on the Dashboard Page')
         let result = [];
         request

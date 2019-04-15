@@ -36,6 +36,17 @@ module.exports = function(app) {
             res.json(dbDataPoints);
         });
     });
+// Get Request for Opps Page Completed Table
+    app.get('/api/opps/completed', function(req, res) {
+        db.Moorhouses.findAll({
+            where: {
+                completed: true
+            }
+        })
+        .then(function(dbDataPoints) {
+            res.json(dbDataPoints)
+        })
+    })
 // Delete Route for Opps Page
     app.delete('/api/delete:id', function(req, res) {
         db.Moorhouses.destroy({
