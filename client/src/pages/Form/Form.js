@@ -14,7 +14,17 @@ export default class Form extends Component {
                 collectingData: '',
                 analyzingData: '',
                 dataBreachRisk: '',
-                avgEmails: ''
+                avgEmails: '',
+                email: '',
+                completed: false,
+                dataCollectionSavings: '',
+                dataProcessingSavings: '',
+                complienceAndSecuritySavings: '',
+                automationSavings: '',
+                annualCompanyValue: '',
+                roi: '',
+                opportunity: true
+
             },
             modal: false
         }
@@ -83,6 +93,8 @@ export default class Form extends Component {
 
     submit = e => {
         e.preventDefault();
+        
+
         console.log('we are submitting');
             superagent
                 .post('/api/moorhouse')
@@ -124,7 +136,15 @@ export default class Form extends Component {
                         analyzingData: '',
                         dataBreachRisk: '',
                         avgEmails: '',
-                        email: ''
+                        email: '',
+                        completed: '',
+                        dataCollectionSavings: '',
+                        dataProcessingSavings: '',
+                        complienceAndSecuritySavings: '',
+                        automationSavings: '',
+                        annualCompanyValue: '',
+                        roi: '',
+                        opportunity: ''
                     },
                     modal: false,
                 });
@@ -149,11 +169,28 @@ export default class Form extends Component {
             analyzingData: '',
             dataBreachRisk: '',
             avgEmails: '',
-            email: ''
+            email: '',
+            completed: '',
+            dataCollectionSavings: '',
+            dataProcessingSavings: '',
+            complienceAndSecuritySavings: '',
+            automationSavings: '',
+            annualCompanyValue: '',
+            roi: '',
+            opportunity: ''
         });
         
     };
     toggle() {
+        const assumptions = {
+            emailCostPerEmployee: 1800,
+            chanceOfDataBreach: .025,
+            dataBreachCost: 1600000,
+            collectData: .17,
+            processData: .16,
+            annualHours: 2000
+        };
+        console.log(assumptions)
         this.setState(prevState => ({
           modal: !prevState.modal
         }));
@@ -161,15 +198,6 @@ export default class Form extends Component {
 
 
   render() {
-      const assumptions = {
-        emailCostPerEmployee: 1800,
-        chanceOfDataBreach: .025,
-        dataBreachCost: 1600000,
-        collectData: .17,
-        processData: .16,
-        annualHours: 2000
-      }
-      console.log(assumptions.collectData)
     return (
       <div className='container'>
           <div className='row'>
