@@ -14,9 +14,10 @@ export default class Opps extends Component {
     this.delete = this.delete.bind(this);
     this.complete = this.complete.bind(this);
     this.view = this.view.bind(this);
+    this.notComplete = this.notComplete.bind(this);
   };
   
-  componentDidMount() {
+  componentWillMount() {
     console.log("We are now mounted on the Opps page");
     request
       .get('/api/opps')
@@ -38,7 +39,6 @@ export default class Opps extends Component {
       .catch(err => {
         console.log(err)
       });
-
   };
 
   delete = e => {
@@ -47,7 +47,7 @@ export default class Opps extends Component {
     console.log(deleteID);
     axios.delete('/api/delete'+deleteID)
     .then((response) => {
-      this.componentDidMount();
+      this.componentWillMount();
     })
     .catch(function(err) {
       console.log(err)
@@ -64,7 +64,7 @@ export default class Opps extends Component {
   };
 
   complete = e => {
-    e.preventDefault();
+    // e.preventDefault();
     console.log('we are updating this record to complete');
     let updateID = e.target.value;
     console.log(updateID);
@@ -73,15 +73,32 @@ export default class Opps extends Component {
     })
     .then(function(response) {
       console.log(response)
-      this.componentDidMount();
-
     })
-    .catch(function(error) {
-      console.log(error)
-    });
+    // .catch(function(error) {
+    //   console.log(error)
+    // });
+    
+    this.componentWillMount();
 
+  };
 
-  }
+  notComplete = e => {
+    // e.preventDefault();
+    console.log('We are moving this record from the complete list to the not yet complete list.');
+    let updateID = e.target.value;
+    console.log(updateID);
+    axios.put('/api/opps/notComplete' + updateID, {
+      completed: false
+    })
+    .then(function(response) {
+      console.log(response)
+    })
+    // .catch(function(error) {
+    //   console.log(error)
+    // });
+    this.componentWillMount();
+
+  };
 
   render() {
     return (
@@ -135,7 +152,7 @@ export default class Opps extends Component {
                   <th>Revenue</th>
                   <th>Revenue Generated</th>
                   <th>View</th>
-                  <th>Complete</th>
+                  <th>Mark as Not Complete</th>
                   <th>Delete</th>
                 </tr>
                 {this.state.inputsCompleted.map((data, index) => (
@@ -146,7 +163,7 @@ export default class Opps extends Component {
                   <td>{data.revenue}</td>
                   <td>{data.potentialRevenue}</td> 
                   <td><button type="button" className="btn btn-outline-dark" value={data.id} onClick={this.view.bind(this)}>Detailed View</button></td>
-                  <td><button type="button" className="btn btn-outline-success" value={data.id} onClick={this.complete.bind(this)}>Mark Complete</button></td>
+                  <td><button type="button" className="btn btn-outline-success" value={data.id} onClick={this.notComplete.bind(this)}>Mark as Not Complete</button></td>
                   <td><button  className="btn btn-outline-danger" value={data.id} onClick={this.delete.bind(this)}>Delete this Record</button></td> 
                 </tr>
                 ))}
@@ -159,5 +176,5 @@ export default class Opps extends Component {
       </div>
     )
   }
-}
+};
 

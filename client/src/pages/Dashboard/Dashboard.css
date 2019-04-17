@@ -1,11 +1,17 @@
-.box {
-    background-color: whitesmoke;
+.circle {
+    /* background-color: whitesmoke;
     padding-bottom: 50px;
-    padding-top: 30px;
+    padding-top: 30px; */
+    border-radius: 50%;
+    width: 100%;
+    height: auto;
+    padding-top: 25%;
+    background: whitesmoke;
 }
 h6 {
     text-align: center;
-
+    padding-bottom: 25%;
+    /* vertical-align: center; */
 }
 .container {
     background-color: white;
@@ -16,4 +22,5 @@ h6 {
 .number {
     font-size: 30px;
     color: blue;
+    /* padding-bottom: 50px; */
 }

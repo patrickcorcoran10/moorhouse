@@ -17,7 +17,10 @@ import axios from 'axios';
         console.log("We are mounted on the display page with record: ", this.props.id);
         axios.get('/api/display'+this.props.id)
         .then(res => {
-            console.log(res.data)
+            console.log(res.data);
+            this.setState({
+                inputs: res.data[0]
+            })
         })
         
         
@@ -42,6 +45,7 @@ import axios from 'axios';
         processData: .16,
         annualHours: 2000
     };
+    console.log(this.state.inputs.companyName);
     return (
          <div className='container' style={style.container}>
             <div className='row'>
@@ -65,10 +69,10 @@ import axios from 'axios';
                                 datasets: [{
                                     // label: "Savings",
                                     data: [
-                                        this.state.inputs.dataCollectionTime*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.costPerEmployee)),
+                                        this.state.inputs.dataCollectionTime*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.avgCostPerEmployee)),
                                         this.state.inputs.dataProcessingTime * parseInt(this.state.inputs.costPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours)),
                                         this.state.inputs.securityComplienceTime * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach),
-                                        this.state.inputs.emailVolume * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee),
+                                        this.state.inputs.avgEmails * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee),
                                     ],
                                     backgroundColor: [
                                         'rgba(255, 99, 132, 0.6)',
@@ -112,7 +116,7 @@ import axios from 'axios';
                     <p>Data Collection Savings: ${this.state.inputs.dataCollectionTime*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.costPerEmployee))}</p>
                     <p>Data Processsing Savings: ${this.state.inputs.dataProcessingTime * parseInt(this.state.inputs.costPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours))}</p>
                     <p>Complience and Security Savings: ${this.state.inputs.securityComplienceTime * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach)}</p>
-                    <p>Automation Savings: ${this.state.inputs.emailVolume * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee)}</p>
+                    <p>Automation Savings: ${                                        this.state.inputs.avgEmails * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee)}</p>
                     <strong>Annual BotCo Value: ${(this.state.inputs.emailVolume * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee))+(this.state.inputs.securityComplienceTime * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(this.state.inputs.dataProcessingTime * parseInt(this.state.inputs.costPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours)))+(this.state.inputs.dataCollectionTime*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.costPerEmployee)))}</strong>
                     <hr/>
                     <strong>ROI: {((this.state.inputs.emailVolume * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee))+(this.state.inputs.securityComplienceTime * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(this.state.inputs.dataProcessingTime * parseInt(this.state.inputs.costPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours)))+(this.state.inputs.dataCollectionTime*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.costPerEmployee))))/(this.state.inputs.planSelect * 12 * this.state.inputs.totalEmployees)}</strong>

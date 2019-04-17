@@ -23,8 +23,8 @@ export default class Form extends Component {
                 automationSavings: '',
                 annualCompanyValue: '',
                 roi: '',
-                opportunity: true
-
+                opportunity: true,
+                planSelect: '8'
             },
             modal: false
         }
@@ -192,7 +192,23 @@ export default class Form extends Component {
         };
         console.log(assumptions)
         this.setState(prevState => ({
-          modal: !prevState.modal
+          modal: !prevState.modal,
+          inputs: {
+            companyName: this.refs.companyName.value,
+            totalEmployees: this.refs.totalEmployees.value,
+            avgCostPerEmployee: this.refs.avgCostPerEmployee.value,
+            collectingData: this.refs.collectingData.value,
+            analyzingData: this.refs.analyzingData.value,
+            dataBreachRisk: this.refs.dataBreachRisk.value,
+            avgEmails: this.refs.avgEmails.value,
+            email: '',
+            dataCollectionSavings: this.state.inputs.collectinData*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.avgCostPerEmployee)),
+            dataProcessingSavings: this.state.inputs.analyzingData * parseInt(this.state.inputs.avgCostPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours)),
+            complienceAndSecuritySavings: this.state.inputs.dataBreachRisk * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach),
+            automationSavings: this.state.inputs.avgEmails * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee),
+            annualCompanyValue: (this.state.inputs.avgEmails * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee))+(this.state.inputs.dataBreachRisk * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(this.state.inputs.analyzingData * parseInt(this.state.inputs.avgCostPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours)))+(this.state.inputs.collectingData*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.avgCostPerEmployee))),
+            roi: ((parseInt(this.state.inputs.avgEmails) * (parseInt(this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee)))+(parseInt(this.state.inputs.dataBreachRisk) * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(parseInt(this.state.inputs.analyzingData) * parseInt(this.state.inputs.avgCostPerEmployee) * (parseInt(this.state.inputs.totalEmployees) * (assumptions.processData * assumptions.annualHours)))+(parseInt(this.state.inputs.collectingData) * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.avgCostPerEmployee))))/(parseInt(this.state.inputs.planSelect) * 12 * parseInt(this.state.inputs.totalEmployees))
+          }
         }));
       }
 
@@ -209,45 +225,37 @@ export default class Form extends Component {
               <div className='col-md-4'>
               </div>
           </div>
-          <div className='row'>
+          <div className='row' id='form1'>
               <div className='col-md-2'>
-
               </div>
               <div className='col-md-8'>
-                  <p>Company Name:</p>
-                  <input ref='companyName' onChange={this.acceptCompanyName}/>
+                  <p>Company Name:  <input ref='companyName' onChange={this.acceptCompanyName}/></p>
                   <hr/>
-                  <p>Number of Employees at Your Company</p>
-                  <input ref='totalEmployees' onChange={this.acceptTotalEmployees}/>
+                  <p>Number of Employees at Your Company:   <input ref='totalEmployees' className="numberInput" onChange={this.acceptTotalEmployees}/></p>
                   <hr/>
-                  <p>Average Hourly Cost Per Employee</p>
-                  <input ref='avgCostPerEmployee' onChange={this.acceptAvgCostPerEmployee}/>
+                  <p>Average Hourly Cost Per Employee:  <input ref='avgCostPerEmployee' className="numberInput" onChange={this.acceptAvgCostPerEmployee}/></p>
                   <hr/>
               </div>
               <div className='col-md-2'>
-                  
               </div>
           </div>
           <hr/>
-          <div className='row'>
+          <div className='row' id='form2'>
               <div className='col-md-2'>
               </div>
               <div className='col-md-8'>
-                  <p>Average Weekly Hours Spent Collecting Data</p>
-                  <input ref='collectingData' placeholder='Benchmark is 6.4 hours' onChange={this.acceptCollectingData}/>
+                  <p>Average Weekly Hours Spent Collecting Data: <input ref='collectingData' className="numberInput" placeholder='Benchmark is 6.4 hours' onChange={this.acceptCollectingData}/></p>
                   <hr/>
-                  <p>Average Weekly Hours Spent Analyzing Data</p>
-                  <input ref='analyzingData' placeholder='Benchmark is 6 hours a week.' onChange={this.acceptAnalyzingData}/>
+                  <p>Average Weekly Hours Spent Analyzing Data: <input ref='analyzingData' className="numberInput" placeholder='Benchmark is 6 hours a week.' onChange={this.acceptAnalyzingData}/></p>
                   <hr/>
-                  <p>Data Breach Risk?</p> 
-                  <select ref='dataBreachRisk' onChange={this.acceptDataBreachRisk}>
-                      <option value='.1'>Low</option>
-                      <option value='.2'>Medium</option>
-                      <option value='.3'>High</option>
-                  </select>
+                  <p>Data Breach Risk?   <select ref='dataBreachRisk' onChange={this.acceptDataBreachRisk}>
+                        <option value='.1'>Low</option>
+                        <option value='.2'>Medium</option>
+                        <option value='.3'>High</option>
+                    </select>
+                  </p> 
                   <hr/>
-                  <p>Average Emails Received Per Week</p>
-                  <input ref='avgEmails' placeholder='Benchmark is 304' onChange={this.acceptAvgEmails}/>
+                  <p>Average Emails Received Per Week:  <input ref='avgEmails' className="numberInput" placeholder='Benchmark is 304' onChange={this.acceptAvgEmails}/></p>
               </div>
               <div className='col-md-2'>
               </div>
@@ -268,10 +276,9 @@ export default class Form extends Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                 <ModalHeader toggle={this.toggle}>Thank you for your time!</ModalHeader>
                 <ModalBody>
-                    <h5 className='modalText'>Annual Savings: ##</h5>
-                    <h5 className='modalText'>% Year ROI: </h5>
-                    <p>Please provide your email address:</p>
-                    <input ref='email' placeholder="j.doe@provider.com" onChange={this.acceptEmail}></input>
+                    <h5 className='modalText'>Annual Savings: {this.state.inputs.annualCompanyValue}</h5>
+                    <h5 className='modalText'>% Year ROI: {this.state.inputs.roi}%</h5>
+                    <p className='modalText'>Please provide your email address:  <input className='modalText' ref='email' placeholder="j.doe@provider.com" onChange={this.acceptEmail}></input></p>
                 </ModalBody>
                 <ModalFooter>
                     <Button color="success" onClick={this.submit}>Submit</Button>{' '}

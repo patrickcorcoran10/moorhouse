@@ -105,4 +105,17 @@ module.exports = function(app) {
             res.json(dbData)
         })
     });
+// Update Route on the Opps page for Not Completed
+    app.put('/api/opps/notComplete:id', function(req, res) {
+        db.Moorhouses.update({
+            completed: false,
+        }, {
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(function(dbData) {
+            res.json(dbData)
+        })
+    });
 }
