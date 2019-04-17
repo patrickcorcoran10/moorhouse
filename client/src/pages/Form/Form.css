@@ -4,5 +4,9 @@
 }
 
 .numberInput {
-    width: 40px;
+    width: 100px;
+}
+
+option {
+    width: 300px;
 }

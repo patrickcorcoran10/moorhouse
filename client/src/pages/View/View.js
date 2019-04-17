@@ -1,132 +1,236 @@
-import React, { Component } from 'react'
-import { Bar } from 'react-chartjs-2';
-import '../View/View.css';
-// import request from 'superagent';
+import React, { Component } from 'react';
 import axios from 'axios';
+import '../View/View.css';
 
- class View extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            inputs: {},
-            // planSelect: '',
-        };
-    }
+export default class View extends Component {
+  constructor(props) {
+    super(props);
 
-    componentDidMount() {
-        console.log("We are mounted on the display page with record: ", this.props.id);
-        axios.get('/api/display'+this.props.id)
-        .then(res => {
-            console.log(res.data);
-            this.setState({
-                inputs: res.data[0]
-            })
-        })
-        
-        
+    this.state={
+      inputs: {}
     };
-
-    
-  render() {
-    
     console.log(this.state)
-    
-    
+  };
+
+  componentWillMount() {
+    console.log('we are mounted on the view page for record number: ', this.props.id);
+    axios.get('/api/view' + this.props.id)
+    .then(res => {
+      let selected = res.data[0]
+      console.log(selected);
+      this.setState({
+        inputs: selected,
+        planSelect: ''
+      });
+      console.log(this.state)
+    })
+  };
+
+  ROI = id => {
+    let idChosen = id.target.value;
+    console.log(idChosen);
+    this.props.history.push('/company-display');
+    this.props.click(idChosen);
+  };
+  
+  acceptPlanSelect = (e) => {
+    e.preventDefault();
+    let id = this.state.inputs.id;
+    console.log(id)
+    console.log(e.target.value, this.refs.planSelect.value, id);
+    this.setState({
+      
+        planSelect: this.refs.planSelect.value,
+      
+    })
+    console.log(this.state.planSelect);
+    axios.put('/api/update'+this.state.inputs.id, {
+      planSelect: this.refs.planSelect.value
+    })
+    .then(function(response) {
+      console.log(response);
+    })
+    .catch(function(error) {
+      console.log(error)
+    })
+    };
+  
+
+  render() {
     const style = {
-        container: {
-            paddingTop: '80px'
-        }
+      container: {
+        paddingTop: '80px'
+      }
     };
     const assumptions = {
-        emailCostPerEmployee: 1800,
-        chanceOfDataBreach: .025,
-        dataBreachCost: 1600000,
-        collectData: .17,
-        processData: .16,
-        annualHours: 2000
+      emailCostPerEmployee: 1800,
+      chanceOfDataBreach: .025,
+      dataBreachCost: 1600000,
+      collectData: .17,
+      processData: .16,
+      annualHours: 2000
     };
-    console.log(this.state.inputs.companyName);
+    console.log(this.state)
     return (
-         <div className='container' style={style.container}>
-            <div className='row'>
-                <div className='col-md-1'>
-                </div>
-                <div className='col-md-10'>
-                    <h6>Graphical Display for {this.state.inputs.companyName}</h6>
-                </div>
-                <div className='col-md-1'>
-                </div>
-            </div>
-            <hr/>
-            <div className='row'>
-                <div className='col-md-1'>
-                </div>
-                <div className='col-md-10'>
-                    <div className="graph">
-                        <Bar 
-                            data={{
-                                labels: ['Data Collection Savings', 'Data Processing Savings', 'Complience and Security Savings', 'Automation Savings'],
-                                datasets: [{
-                                    // label: "Savings",
-                                    data: [
-                                        this.state.inputs.dataCollectionTime*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.avgCostPerEmployee)),
-                                        this.state.inputs.dataProcessingTime * parseInt(this.state.inputs.costPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours)),
-                                        this.state.inputs.securityComplienceTime * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach),
-                                        this.state.inputs.avgEmails * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee),
-                                    ],
-                                    backgroundColor: [
-                                        'rgba(255, 99, 132, 0.6)',
-                                        'rgba(54, 162, 235, 0.6)',
-                                        'rgba(255, 206, 86, 0.6)',
-                                        'rgba(75, 192, 192, 0.6)',
-                                        'rgba(153, 102, 255, 0.6)',
-                                        'rgba(255, 159, 64, 0.6)',
-                                        'rgba(255, 99, 132, 0.6)'
-                                    ],
-                                    boarderWidth: 1,
-                                    borderColor: '#777',
-                                    hoverBorderWidth: 3,
-                                    hoverBorderColor: '#000'
-                                }],
-                            }}
-                            width={100}
-                            height={50}
-                            options={{
-                                title: {
-                                    display: true,
-                                    text: 'Savings by Value Lever',
-                                    fontSize: 25
-                                },
-                                legend: {
-                                    display: false,
-                                    text: 'example'
-                                }
-                            }}
-                        />
-                    </div>
-                </div>
-                <div className='col-md-1'>
-                </div>
-            </div>
-            <div className='row'>
-                <div className='col-md-1'>
-                </div>
-                <div className='col-md-10' id='numbers'>
-                    <strong>Annual Subscription Cost: ${this.state.inputs.planSelect * 12 * this.state.inputs.totalEmployees}</strong>
-                    <p>Data Collection Savings: ${this.state.inputs.dataCollectionTime*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.costPerEmployee))}</p>
-                    <p>Data Processsing Savings: ${this.state.inputs.dataProcessingTime * parseInt(this.state.inputs.costPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours))}</p>
-                    <p>Complience and Security Savings: ${this.state.inputs.securityComplienceTime * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach)}</p>
-                    <p>Automation Savings: ${                                        this.state.inputs.avgEmails * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee)}</p>
-                    <strong>Annual BotCo Value: ${(this.state.inputs.emailVolume * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee))+(this.state.inputs.securityComplienceTime * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(this.state.inputs.dataProcessingTime * parseInt(this.state.inputs.costPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours)))+(this.state.inputs.dataCollectionTime*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.costPerEmployee)))}</strong>
-                    <hr/>
-                    <strong>ROI: {((this.state.inputs.emailVolume * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee))+(this.state.inputs.securityComplienceTime * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(this.state.inputs.dataProcessingTime * parseInt(this.state.inputs.costPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours)))+(this.state.inputs.dataCollectionTime*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.costPerEmployee))))/(this.state.inputs.planSelect * 12 * this.state.inputs.totalEmployees)}</strong>
-                </div>
-                <div className='col-md-1'>
-                </div>
-            </div>
+      <div style={style.container} className='container'>
+        <div className="row" id="header">
+          <div className='col-md-1'>
+          </div>
+          <div className="col-md-5">
+              <h4>The Employee Experience ROI Calculator</h4>
+              <br />
+              <h6>{this.state.inputs.companyName}</h6>
+              <br />
+              <p>Client Name: {this.state.inputs.clientName}</p>
+              <p>Client Email: {this.state.inputs.clientEmail}</p>
+          </div>
+          <div className='col-md-5'>
+            <p>Plan Selection</p>
+              <div className="input-group mb-3">
+                  <select ref='planSelect' onChange={this.acceptPlanSelect=this.acceptPlanSelect.bind(this)} className="custom-select" id="inputGroupSelect02">
+                      <option>Choose...</option>
+                      <option value="8">Standard</option>
+                      <option value="15">Plus</option>
+                  </select>
+                  <div className="input-group-append">
+                      <label className="input-group-text" htmlFor="inputGroupSelect02">Options</label>
+                  </div>
+              </div>
+              <button value={this.state.inputs.id} onClick={this.ROI}>View ROI</button>
+          </div>
+          <div className='col-md-1'>
+          </div>
+      </div>
+      <hr/>
+      <div className='row'>
+        <div className='col-md-1'>
         </div>
+        <div className='col-md-5' id='tableLeft'>
+          <p>Time Spent Collecting Data</p>
+        </div>
+        <div className='col-md-5' id='tableRight'>
+          <div className='row'>
+            <div className='col-sm-8'>
+              <p>Time Spent Collecting Data</p>
+              <p>Annual Hours</p>
+              <p>Hours spent per worker collecting data</p>
+              <p>Total Workers</p>
+              <p>Total hours spent collecting data</p>
+              <p>Cost per hour</p>
+              <p>Total cost of collecting data</p>
+              <p>BotCo savings</p>
+              <strong>Data Collection Savings</strong>
+            </div>
+            <div className='col-sm-4'>
+              <p>{assumptions.collectData}</p>
+              <p>{assumptions.annualHours}</p>
+              <p>{assumptions.collectData * assumptions.annualHours}</p>
+              <p>{this.state.inputs.totalEmployees}</p>
+              <p>{(assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)}</p>
+              <p>${this.state.inputs.costPerEmployee}</p>             
+              <p>${((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * parseInt(this.state.inputs.costPerEmployee)}</p>
+              <p>{this.state.inputs.dataCollectionTime}</p>
+              <strong>${this.state.inputs.dataCollectionTime*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.costPerEmployee))}</strong>
+            </div>
+          </div>
+        </div>
+        <div className='col-md-1'>
+        </div>
+      </div>
+      <hr/>
+      <div className='row'>
+        <div className='col-md-1'>
+        </div>
+        <div className='col-md-5' id='tableLeft'>
+          <p>Time Spent Processing Data</p>
+        </div>
+        <div className='col-md-5' id='tableRight'>
+          <div className='row'>
+            <div className='col-sm-8'>
+              <p>Time spent processing data</p>
+              <p>Annual Hours</p>
+              <p>Hours spent per worker processing data</p>
+              <p>Total Workers</p>
+              <p>Total hours spent processing data</p>
+              <p>Cost per hour</p>
+              <p>Total cost of processing data</p>
+              <p>BotCo savings</p>
+              <strong>Data Collection Savings</strong>
+            </div>
+            <div className='col-sm-4'>
+              <p>{assumptions.processData}</p>
+              <p>{assumptions.annualHours}</p>
+              <p>{assumptions.processData * assumptions.annualHours}</p>
+              <p>{this.state.inputs.totalEmployees}</p>
+              <p>{this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours)}</p>
+              <p>${this.state.inputs.costPerEmployee}</p>
+              <p>${parseInt(this.state.inputs.costPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours))}</p>
+              <p>{this.state.inputs.dataProcessingTime}</p>
+              <strong>${this.state.inputs.dataProcessingTime * parseInt(this.state.inputs.costPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours))}</strong>
+            </div>
+          </div>
+        </div>
+        <div className='col-md-1'>
+        </div>
+      </div>
+      <hr/>
+      <div className='row'>
+        <div className='col-md-1'>
+        </div>
+        <div className='col-md-5' id='tableLeft'>
+          <p>Compliance Savings and Improved Security</p>
+        </div>
+        <div className='col-md-5' id='tableRight'>
+          <div className='row'>
+            <div className='col-sm-8'>
+              <p>Average cost of data breach</p>
+              <p>Chances of data breach</p>
+              <p>Total data breach costs</p>
+              <p>BotCo savings</p>
+              <strong>Compliance and Security Savings</strong>
+            </div>
+            <div className='col-sm-4'>
+              <p>${assumptions.dataBreachCost}</p>
+              <p>{assumptions.chanceOfDataBreach}</p>
+              <p>{assumptions.dataBreachCost * assumptions.chanceOfDataBreach}</p>
+              <p>{this.state.inputs.securityComplienceTime}</p>
+              <strong>${this.state.inputs.securityComplienceTime * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach)}</strong>
+            </div>
+          </div>
+        </div>
+        <div className='col-md-1'>
+        </div>
+      </div>
+      <hr/>
+      <div className='row'>
+        <div className='col-md-1'>
+        </div>
+        <div className='col-md-5' id='tableLeft'>
+          <p>Productivity increase via automation</p>
+        </div>
+        <div className='col-md-5' id='tableRight'>
+          <div className='row'>
+            <div className='col-sm-8'>
+              <p>Total users</p>
+              <p>Cost of unnecessary emails per user</p>
+              <p>Total email costs</p>
+              <p>BotCo savings</p>
+              <strong>Automation Savings</strong>
+            </div>
+            <div className='col-sm-4'>
+              <p>{this.state.inputs.totalEmployees}</p>
+              <p>${assumptions.emailCostPerEmployee}</p>
+              <p>${this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee}</p>
+              <p>{this.state.inputs.emailVolume}</p>
+              <strong>${this.state.inputs.emailVolume * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee)}</strong>
+            </div>
+          </div>
+        </div>
+        <div className='col-md-1'>
+        </div>
+      </div>
+      <hr/>
+    </div>
     )
   }
 }
-
-export default View;

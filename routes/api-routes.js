@@ -12,12 +12,12 @@ module.exports = function(app) {
             dataBreachRisk: req.body.dataBreachRisk,
             avgEmails: req.body.avgEmails,
             email: req.body.email,
-            // dataCollectionSavings: req.body.dataCollectionSavings,
-            // dataProcessingSavings: req.body.dataProcessingSavings,
-            // complienceAndSecuritySavings: req.body.complienceAndSecuritySavings,
-            // automationSavings: req.body.automationSavings,
-            // annualCompanyValue: req.body.annualCompanyValue,
-            // roi: req.body.roi,
+            dataCollectionSavings: req.body.dataCollectionSavings,
+            dataProcessingSavings: req.body.dataProcessingSavings,
+            complienceAndSecuritySavings: req.body.complienceAndSecuritySavings,
+            automationSavings: req.body.automationSavings,
+            annualCompanyValue: req.body.annualCompanyValue,
+            roi: req.body.roi,
             completed: false,
             opportunity: true,
         })
@@ -60,7 +60,7 @@ module.exports = function(app) {
     });
 
 // Get Route for Display Page
-    app.get('/api/display:id', function(req, res) {
+    app.get('/api/view:id', function(req, res) {
         db.Moorhouses.findAll({
             where: {
                 id: req.params.id

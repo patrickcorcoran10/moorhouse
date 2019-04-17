@@ -59,7 +59,7 @@ export default class Opps extends Component {
     e.preventDefault();
     var viewID = e.target.value;
     console.log(viewID);
-    this.props.history.push('/company-view');
+    this.props.history.push('/company');
     this.props.click(viewID);
   };
 

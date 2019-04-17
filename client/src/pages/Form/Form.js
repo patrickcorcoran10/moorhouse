@@ -202,12 +202,12 @@ export default class Form extends Component {
             dataBreachRisk: this.refs.dataBreachRisk.value,
             avgEmails: this.refs.avgEmails.value,
             email: '',
-            dataCollectionSavings: this.state.inputs.collectinData*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.avgCostPerEmployee)),
-            dataProcessingSavings: this.state.inputs.analyzingData * parseInt(this.state.inputs.avgCostPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours)),
-            complienceAndSecuritySavings: this.state.inputs.dataBreachRisk * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach),
-            automationSavings: this.state.inputs.avgEmails * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee),
-            annualCompanyValue: (this.state.inputs.avgEmails * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee))+(this.state.inputs.dataBreachRisk * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(this.state.inputs.analyzingData * parseInt(this.state.inputs.avgCostPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours)))+(this.state.inputs.collectingData*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.avgCostPerEmployee))),
-            roi: ((parseInt(this.state.inputs.avgEmails) * (parseInt(this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee)))+(parseInt(this.state.inputs.dataBreachRisk) * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(parseInt(this.state.inputs.analyzingData) * parseInt(this.state.inputs.avgCostPerEmployee) * (parseInt(this.state.inputs.totalEmployees) * (assumptions.processData * assumptions.annualHours)))+(parseInt(this.state.inputs.collectingData) * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.avgCostPerEmployee))))/(parseInt(this.state.inputs.planSelect) * 12 * parseInt(this.state.inputs.totalEmployees))
+            dataCollectionSavings: this.refs.collectingData.value * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value)),
+            dataProcessingSavings: this.refs.analyzingData.value * parseFloat(this.refs.avgCostPerEmployee.value) * (this.refs.totalEmployees.value * (assumptions.processData * assumptions.annualHours)),
+            complienceAndSecuritySavings: this.refs.dataBreachRisk.value * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach),
+            automationSavings: this.refs.avgEmails.value * (this.refs.totalEmployees.value * assumptions.emailCostPerEmployee),
+            annualCompanyValue: (this.refs.avgEmails.value * (this.refs.totalEmployees.value * assumptions.emailCostPerEmployee))+(this.refs.dataBreachRisk.value * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(this.refs.analyzingData.value * parseFloat(this.refs.avgCostPerEmployee.value) * (this.refs.totalEmployees.value * (assumptions.processData * assumptions.annualHours)))+(this.refs.collectingData.value * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value))),
+            roi: ((parseFloat(this.refs.avgEmails.value) * (parseFloat(this.refs.totalEmployees.value * assumptions.emailCostPerEmployee)))+(parseFloat(this.refs.dataBreachRisk.value) * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(parseInt(this.refs.analyzingData.value) * parseInt(this.refs.avgCostPerEmployee.value) * (parseInt(this.refs.totalEmployees.value) * (assumptions.processData * assumptions.annualHours)))+(parseInt(this.refs.collectingData.value) * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value))))/(parseInt(this.state.inputs.planSelect.value) * 12 * parseInt(this.refs.totalEmployees.value))
           }
         }));
       }
@@ -216,15 +216,7 @@ export default class Form extends Component {
   render() {
     return (
       <div className='container'>
-          <div className='row'>
-              <div className='col-md-4'>
-              </div>
-              <div className='col-md-4'>
-                  <p>Form Page</p>
-              </div>
-              <div className='col-md-4'>
-              </div>
-          </div>
+          
           <div className='row' id='form1'>
               <div className='col-md-2'>
               </div>
@@ -244,18 +236,36 @@ export default class Form extends Component {
               <div className='col-md-2'>
               </div>
               <div className='col-md-8'>
-                  <p>Average Weekly Hours Spent Collecting Data: <input ref='collectingData' className="numberInput" placeholder='Benchmark is 6.4 hours' onChange={this.acceptCollectingData}/></p>
-                  <hr/>
-                  <p>Average Weekly Hours Spent Analyzing Data: <input ref='analyzingData' className="numberInput" placeholder='Benchmark is 6 hours a week.' onChange={this.acceptAnalyzingData}/></p>
-                  <hr/>
-                  <p>Data Breach Risk?   <select ref='dataBreachRisk' onChange={this.acceptDataBreachRisk}>
-                        <option value='.1'>Low</option>
-                        <option value='.2'>Medium</option>
-                        <option value='.3'>High</option>
+                  <p>Average Weekly Hours Spent Collecting Data: 
+                    
+                  </p>
+                  <select ref='collectingData' className="numberInput" onChange={this.acceptCollectingData}>
+                        <option value='.025'>Low (Less Than 6 Hours Per Week)</option>
+                        <option value='.05'>Average (About 6 Hours Per Week)</option>
+                        <option value='.075'>High (More than 6 Hours Per Week)</option>
                     </select>
-                  </p> 
                   <hr/>
-                  <p>Average Emails Received Per Week:  <input ref='avgEmails' className="numberInput" placeholder='Benchmark is 304' onChange={this.acceptAvgEmails}/></p>
+                  <p>Average Weekly Hours Spent Analyzing Data: 
+                  </p>
+                  <select ref='analyzingData' className="numberInput" onChange={this.acceptAnalyzingData}>
+                        <option value='.025'>Low (Less Than 6 Hours Per Week)</option>
+                        <option value='.05'>Average (About 6 Hours Per Week)</option>
+                        <option value='.075'>High (More than 6 Hours Per Week)</option>
+                    </select>
+                  <hr/>
+                  <p>Data Breach Risk?   </p> 
+                  <select ref='dataBreachRisk' onChange={this.acceptDataBreachRisk}>
+                        <option value='.01'>Low</option>
+                        <option value='.02'>Medium</option>
+                        <option value='.03'>High</option>
+                    </select>
+                  <hr/>
+                  <p>Average Emails Received Per Week:  </p>
+                  <select ref='avgEmails' className="numberInput" placeholder='Benchmark is 304' onChange={this.acceptAvgEmails}>
+                        <option value='.05'>Low (Less than 300 Emails Per Week)</option>
+                        <option value='.075'>Average (About 300 Emails Per Week)</option>
+                        <option value='.1'>High (More than 300 emails Per Week)</option>
+                  </select>
               </div>
               <div className='col-md-2'>
               </div>
@@ -276,7 +286,7 @@ export default class Form extends Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                 <ModalHeader toggle={this.toggle}>Thank you for your time!</ModalHeader>
                 <ModalBody>
-                    <h5 className='modalText'>Annual Savings: {this.state.inputs.annualCompanyValue}</h5>
+                    <h5 className='modalText'>Annual Savings: ${this.state.inputs.annualCompanyValue}</h5>
                     <h5 className='modalText'>% Year ROI: {this.state.inputs.roi}%</h5>
                     <p className='modalText'>Please provide your email address:  <input className='modalText' ref='email' placeholder="j.doe@provider.com" onChange={this.acceptEmail}></input></p>
                 </ModalBody>
