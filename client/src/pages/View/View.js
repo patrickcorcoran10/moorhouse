@@ -46,7 +46,7 @@ export default class View extends Component {
     })
     console.log(this.state.planSelect);
     axios.put('/api/update'+this.state.inputs.id, {
-      planSelect: this.state.planSelect.value
+      planSelect: this.refs.planSelect.value
     })
     .then(function(response) {
       console.log(response);

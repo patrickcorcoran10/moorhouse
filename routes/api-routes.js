@@ -19,7 +19,8 @@ module.exports = function(app) {
             annualCompanyValue: req.body.annualCompanyValue,
             standardROI: req.body.standardROI,
             plusROI: req.body.plusROI,
-            revenue: req.body.revenue,
+            standardRevenue: req.body.standardRevenue,
+            plusRevenue: req.body.plusRevenue,
             completed: false,
             opportunity: true,
         })
