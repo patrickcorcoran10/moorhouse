@@ -58,10 +58,8 @@ export default class Dashboard extends Component {
                 this.setState({
                     revenues: sum,
                 })
-                
             });
-        
-    }
+    };
 
   render() {
     return (

@@ -243,10 +243,19 @@ export default class Form extends Component {
               <div className='col-md-8'>
                   <p>Company Name:  <input ref='companyName' onChange={this.acceptCompanyName}/></p>
                   <hr/>
-                  <p>Number of Employees at Your Company:   <input ref='totalEmployees' className="numberInput" onChange={this.acceptTotalEmployees}/></p>
+                  <p>Total Employees:  <input ref='totalEmployees' onChange={this.acceptEmployeeTotal}/></p>
                   <hr/>
-                  <p>Average Hourly Cost Per Employee:  <input ref='avgCostPerEmployee' className="numberInput" onChange={this.acceptAvgCostPerEmployee}/></p>
-                  <hr/>
+                  <p>Cost per Employee per Hour</p>
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text">$</span>
+                        </div>
+                        <input onChange={this.acceptAvgCostPerEmployee} ref='avgCostPerEmployee' type="text" className="form-control" aria-label="Amount (to the nearest dollar)"/>
+                        <div className="input-group-append">
+                            <span className="input-group-text">.00</span>
+                        </div>
+                    </div>
+                    <hr/>
               </div>
               <div className='col-md-2'>
               </div>
@@ -259,33 +268,57 @@ export default class Form extends Component {
                   <p>Average Weekly Hours Spent Collecting Data: 
                     
                   </p>
-                  <select ref='collectingData' className="numberInput" onChange={this.acceptCollectingData}>
-                        <option value='.025'>Low (Less Than 6 Hours Per Week)</option>
-                        <option value='.05'>Average (About 6 Hours Per Week)</option>
-                        <option value='.075'>High (More than 6 Hours Per Week)</option>
-                    </select>
+                  <div className="input-group mb-3">
+                        <select ref='collectingData' onChange={this.collectingData} className="custom-select" id="inputGroupSelect02">
+                            <option>Choose...</option>
+                            <option value='.025'>Low (Less than 6 hours/week)</option>
+                            <option value=".05">Average (About 6.4 hours/week)</option>
+                            <option value=".075">High (More than 7 hours/week)</option>
+                        </select>
+                        <div className="input-group-append">
+                            <label className="input-group-text" htmlFor="inputGroupSelect02">Options</label>
+                        </div>
+                    </div>
                   <hr/>
                   <p>Average Weekly Hours Spent Analyzing Data: 
                   </p>
-                  <select ref='analyzingData' className="numberInput" onChange={this.acceptAnalyzingData}>
-                        <option value='.025'>Low (Less Than 6 Hours Per Week)</option>
-                        <option value='.05'>Average (About 6 Hours Per Week)</option>
-                        <option value='.075'>High (More than 6 Hours Per Week)</option>
-                    </select>
+                  <div className="input-group mb-3">
+                        <select ref='analyzingData' onChange={this.acceptAnalyzingData} className="custom-select" id="inputGroupSelect02">
+                            <option>Choose...</option>
+                            <option value=".025">Low (Less than 6 hours/week)</option>
+                            <option value=".05">Average (About 6 hours/week)</option>
+                            <option value=".075">High (More than 6 hours/week)</option>
+                        </select>
+                        <div className="input-group-append">
+                            <label className="input-group-text" htmlFor="inputGroupSelect02">Options</label>
+                        </div>
+                    </div>
                   <hr/>
                   <p>Data Breach Risk?   </p> 
-                  <select ref='dataBreachRisk' onChange={this.acceptDataBreachRisk}>
-                        <option value='.01'>Low</option>
-                        <option value='.02'>Medium</option>
-                        <option value='.03'>High</option>
-                    </select>
+                  <div className="input-group mb-3">
+                        <select ref='dataBreachRisk' onChange={this.acceptDataBreachRisk} className="custom-select" id="inputGroupSelect02">
+                            <option>Choose...</option>
+                            <option value=".01">Low</option>
+                            <option value=".02">Medium</option>
+                            <option value=".03">High</option>
+                        </select>
+                        <div className="input-group-append">
+                            <label className="input-group-text" htmlFor="inputGroupSelect02">Options</label>
+                        </div>
+                    </div>
                   <hr/>
                   <p>Average Emails Received Per Week:  </p>
-                  <select ref='avgEmails' className="numberInput" placeholder='Benchmark is 304' onChange={this.acceptAvgEmails}>
-                        <option value='.05'>Low (Less than 300 Emails Per Week)</option>
-                        <option value='.075'>Average (About 300 Emails Per Week)</option>
-                        <option value='.1'>High (More than 300 emails Per Week)</option>
-                  </select>
+                  <div className="input-group mb-3">
+                        <select ref='avgEmails' onChange={this.acceptAvgEmails} className="custom-select" id="inputGroupSelect02">
+                            <option>Choose...</option>
+                            <option value='.05'>Low (Less than 300 emails/Week)</option>
+                            <option value='.075'>Average (About 300 emails/Week)</option>
+                            <option value='.1'>High (More than 300 emails/Week)</option>
+                        </select>
+                        <div className="input-group-append">
+                            <label className="input-group-text" htmlFor="inputGroupSelect02">Options</label>
+                        </div>
+                    </div>
               </div>
               <div className='col-md-2'>
               </div>
@@ -307,7 +340,7 @@ export default class Form extends Component {
                 <ModalHeader toggle={this.toggle}>Thank you for your time!</ModalHeader>
                 <ModalBody>
                     <h5 className='modalText'>Annual Savings: ${this.state.inputs.annualCompanyValue}</h5>
-                    <h5 className='modalText'>% Year ROI: Between {this.state.inputs.standardROI}% and {this.state.inputs.plusROI}%</h5>
+                    <h5 className='modalText'>This Year's ROI: Between {this.state.inputs.standardROI}% and {this.state.inputs.plusROI}%</h5>
                     <p className='modalText'>Please provide your email address:  <input className='modalText' ref='email' placeholder="j.doe@provider.com" onChange={this.acceptEmail}></input></p>
                 </ModalBody>
                 <ModalFooter>
