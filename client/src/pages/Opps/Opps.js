@@ -72,13 +72,37 @@ export default class Opps extends Component {
       completed: true
     })
     .then(function(response) {
-      console.log(response)
+      console.log(response);
+      // this.componentWillMount();
+      request
+      .get('/api/opps')
+      .then(res => {
+          this.setState({
+            inputsOpps:  res.body 
+          })
+      })
+      .catch(err => {
+          console.log(err)
+      });
+    request
+      .get('/api/opps/completed')
+      .then(res => {
+        console.log(res);
+        this.setState({
+            inputsCompleted: res.body
+        })
+        this.componentWillMount()
+      })
+      .catch(err => {
+        console.log(err)
+      });
     })
-    // .catch(function(error) {
-    //   console.log(error)
-    // });
+    .catch(function(error) {
+      console.log(error)
+    });
+    alert("This Record is Now Completed.")
     
-    this.componentWillMount();
+    
 
   };
 
@@ -91,13 +115,33 @@ export default class Opps extends Component {
       completed: false
     })
     .then(function(response) {
-      console.log(response)
+      console.log(response);
+      // this.componentWillMount();
+      request
+      .get('/api/opps')
+      .then(res => {
+          this.setState({
+            inputsOpps:  res.body 
+          })
+      })
+      .catch(err => {
+          console.log(err)
+      });
+    request
+      .get('/api/opps/completed')
+      .then(res => {
+        this.setState({
+            inputsCompleted: res.body
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      });
     })
-    // .catch(function(error) {
-    //   console.log(error)
-    // });
-    this.componentWillMount();
-
+    .catch(function(error) {
+      console.log(error)
+    });
+    alert("This Record has been moved to the Not-yet-completed list.")
   };
 
   render() {
