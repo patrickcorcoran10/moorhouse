@@ -22,9 +22,10 @@ export default class Form extends Component {
                 complienceAndSecuritySavings: '',
                 automationSavings: '',
                 annualCompanyValue: '',
-                roi: '',
+                standardROI: '',
+                plusROI: '',
                 opportunity: true,
-                planSelect: '8'
+                revenue: '??'
             },
             modal: false
         }
@@ -93,8 +94,16 @@ export default class Form extends Component {
 
     submit = e => {
         e.preventDefault();
-        
-
+        const assumptions = {
+            emailCostPerEmployee: 1800,
+            chanceOfDataBreach: .025,
+            dataBreachCost: 1600000,
+            collectData: .17,
+            processData: .16,
+            annualHours: 2000,
+            standardPlan: 8,
+            plusPlan: 15
+        };
         console.log('we are submitting');
             superagent
                 .post('/api/moorhouse')
@@ -107,12 +116,14 @@ export default class Form extends Component {
                     dataBreachRisk: this.refs.dataBreachRisk.value,
                     avgEmails: this.refs.avgEmails.value,
                     email: this.refs.email.value,
-                    dataCollectionSavings: '',
-                    dataProcessingSavings: '',
-                    complienceAndSecuritySavings: '',
-                    automationSavings: '',
-                    annualCompanyValue: '',
-                    roi: ''
+                    dataCollectionSavings: this.refs.collectingData.value * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value)),
+                    dataProcessingSavings: this.refs.analyzingData.value * parseFloat(this.refs.avgCostPerEmployee.value) * (this.refs.totalEmployees.value * (assumptions.processData * assumptions.annualHours)),
+                    complienceAndSecuritySavings: this.refs.dataBreachRisk.value * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach),
+                    automationSavings: this.refs.avgEmails.value * (this.refs.totalEmployees.value * assumptions.emailCostPerEmployee),
+                    annualCompanyValue: (this.refs.avgEmails.value * (this.refs.totalEmployees.value * assumptions.emailCostPerEmployee))+(this.refs.dataBreachRisk.value * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(this.refs.analyzingData.value * parseFloat(this.refs.avgCostPerEmployee.value) * (this.refs.totalEmployees.value * (assumptions.processData * assumptions.annualHours)))+(this.refs.collectingData.value * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value))),
+                    standardROI: ((parseFloat(this.refs.avgEmails.value) * (parseFloat(this.refs.totalEmployees.value * assumptions.emailCostPerEmployee)))+(parseFloat(this.refs.dataBreachRisk.value) * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(parseInt(this.refs.analyzingData.value) * parseInt(this.refs.avgCostPerEmployee.value) * (parseInt(this.refs.totalEmployees.value) * (assumptions.processData * assumptions.annualHours)))+(parseInt(this.refs.collectingData.value) * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value))))/(assumptions.standardPlan * 12 * parseInt(this.refs.totalEmployees.value)),
+                    plusROI: ((parseFloat(this.refs.avgEmails.value) * (parseFloat(this.refs.totalEmployees.value * assumptions.emailCostPerEmployee)))+(parseFloat(this.refs.dataBreachRisk.value) * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(parseInt(this.refs.analyzingData.value) * parseInt(this.refs.avgCostPerEmployee.value) * (parseInt(this.refs.totalEmployees.value) * (assumptions.processData * assumptions.annualHours)))+(parseInt(this.refs.collectingData.value) * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value))))/(assumptions.plusPlan * 12 * parseInt(this.refs.totalEmployees.value)),
+                    revenue: '??'
                 })
                 .end((err, res) => {
                     console.log(res);
@@ -143,8 +154,10 @@ export default class Form extends Component {
                         complienceAndSecuritySavings: '',
                         automationSavings: '',
                         annualCompanyValue: '',
-                        roi: '',
-                        opportunity: ''
+                        standardROI: '',
+                        plusROI: '',
+                        opportunity: '',
+                        revenue: ''
                     },
                     modal: false,
                 });
@@ -176,8 +189,10 @@ export default class Form extends Component {
             complienceAndSecuritySavings: '',
             automationSavings: '',
             annualCompanyValue: '',
-            roi: '',
-            opportunity: ''
+            standardROI: '',
+            plusROI: '',
+            opportunity: '',
+            revenue: ''
         });
         
     };
@@ -188,7 +203,9 @@ export default class Form extends Component {
             dataBreachCost: 1600000,
             collectData: .17,
             processData: .16,
-            annualHours: 2000
+            annualHours: 2000,
+            standardPlan: 8,
+            plusPlan: 15
         };
         console.log(assumptions)
         this.setState(prevState => ({
@@ -207,7 +224,9 @@ export default class Form extends Component {
             complienceAndSecuritySavings: this.refs.dataBreachRisk.value * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach),
             automationSavings: this.refs.avgEmails.value * (this.refs.totalEmployees.value * assumptions.emailCostPerEmployee),
             annualCompanyValue: (this.refs.avgEmails.value * (this.refs.totalEmployees.value * assumptions.emailCostPerEmployee))+(this.refs.dataBreachRisk.value * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(this.refs.analyzingData.value * parseFloat(this.refs.avgCostPerEmployee.value) * (this.refs.totalEmployees.value * (assumptions.processData * assumptions.annualHours)))+(this.refs.collectingData.value * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value))),
-            roi: ((parseFloat(this.refs.avgEmails.value) * (parseFloat(this.refs.totalEmployees.value * assumptions.emailCostPerEmployee)))+(parseFloat(this.refs.dataBreachRisk.value) * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(parseInt(this.refs.analyzingData.value) * parseInt(this.refs.avgCostPerEmployee.value) * (parseInt(this.refs.totalEmployees.value) * (assumptions.processData * assumptions.annualHours)))+(parseInt(this.refs.collectingData.value) * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value))))/(parseInt(this.state.inputs.planSelect.value) * 12 * parseInt(this.refs.totalEmployees.value))
+            standardROI: ((parseFloat(this.refs.avgEmails.value) * (parseFloat(this.refs.totalEmployees.value * assumptions.emailCostPerEmployee)))+(parseFloat(this.refs.dataBreachRisk.value) * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(parseInt(this.refs.analyzingData.value) * parseInt(this.refs.avgCostPerEmployee.value) * (parseInt(this.refs.totalEmployees.value) * (assumptions.processData * assumptions.annualHours)))+(parseInt(this.refs.collectingData.value) * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value))))/(assumptions.standardPlan * 12 * parseInt(this.refs.totalEmployees.value)),
+            plusROI: ((parseFloat(this.refs.avgEmails.value) * (parseFloat(this.refs.totalEmployees.value * assumptions.emailCostPerEmployee)))+(parseFloat(this.refs.dataBreachRisk.value) * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(parseInt(this.refs.analyzingData.value) * parseInt(this.refs.avgCostPerEmployee.value) * (parseInt(this.refs.totalEmployees.value) * (assumptions.processData * assumptions.annualHours)))+(parseInt(this.refs.collectingData.value) * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value))))/(assumptions.standardPlan * 12 * parseInt(this.refs.totalEmployees.value)),
+            revenue: '??',
           }
         }));
       }
@@ -287,7 +306,7 @@ export default class Form extends Component {
                 <ModalHeader toggle={this.toggle}>Thank you for your time!</ModalHeader>
                 <ModalBody>
                     <h5 className='modalText'>Annual Savings: ${this.state.inputs.annualCompanyValue}</h5>
-                    <h5 className='modalText'>% Year ROI: {this.state.inputs.roi}%</h5>
+                    <h5 className='modalText'>% Year ROI: {this.state.inputs.standardROI}%</h5>
                     <p className='modalText'>Please provide your email address:  <input className='modalText' ref='email' placeholder="j.doe@provider.com" onChange={this.acceptEmail}></input></p>
                 </ModalBody>
                 <ModalFooter>

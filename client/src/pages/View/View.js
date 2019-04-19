@@ -7,7 +7,8 @@ export default class View extends Component {
     super(props);
 
     this.state={
-      inputs: {}
+      inputs: {},
+      planSelect: ''
     };
     console.log(this.state)
   };
@@ -45,7 +46,7 @@ export default class View extends Component {
     })
     console.log(this.state.planSelect);
     axios.put('/api/update'+this.state.inputs.id, {
-      planSelect: this.refs.planSelect.value
+      planSelect: this.state.planSelect.value
     })
     .then(function(response) {
       console.log(response);
@@ -81,8 +82,7 @@ export default class View extends Component {
               <br />
               <h6>{this.state.inputs.companyName}</h6>
               <br />
-              <p>Client Name: {this.state.inputs.clientName}</p>
-              <p>Client Email: {this.state.inputs.clientEmail}</p>
+              <p>Client Email: {this.state.inputs.email}</p>
           </div>
           <div className='col-md-5'>
             <p>Plan Selection</p>
@@ -127,10 +127,10 @@ export default class View extends Component {
               <p>{assumptions.collectData * assumptions.annualHours}</p>
               <p>{this.state.inputs.totalEmployees}</p>
               <p>{(assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)}</p>
-              <p>${this.state.inputs.costPerEmployee}</p>             
-              <p>${((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * parseInt(this.state.inputs.costPerEmployee)}</p>
-              <p>{this.state.inputs.dataCollectionTime}</p>
-              <strong>${this.state.inputs.dataCollectionTime*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.costPerEmployee))}</strong>
+              <p>${this.state.inputs.avgCostPerEmployee}</p>             
+              <p>${((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * parseInt(this.state.inputs.avgCostPerEmployee)}</p>
+              <p>{this.state.inputs.collectingData}</p>
+              <strong>${this.state.inputs.collectingData*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.avgCostPerEmployee))}</strong>
             </div>
           </div>
         </div>
@@ -163,10 +163,10 @@ export default class View extends Component {
               <p>{assumptions.processData * assumptions.annualHours}</p>
               <p>{this.state.inputs.totalEmployees}</p>
               <p>{this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours)}</p>
-              <p>${this.state.inputs.costPerEmployee}</p>
-              <p>${parseInt(this.state.inputs.costPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours))}</p>
-              <p>{this.state.inputs.dataProcessingTime}</p>
-              <strong>${this.state.inputs.dataProcessingTime * parseInt(this.state.inputs.costPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours))}</strong>
+              <p>${this.state.inputs.avgCostPerEmployee}</p>
+              <p>${parseInt(this.state.inputs.avgCostPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours))}</p>
+              <p>{this.state.inputs.analyzingData}</p>
+              <strong>${this.state.inputs.analyzingData * parseInt(this.state.inputs.avgCostPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours))}</strong>
             </div>
           </div>
         </div>
@@ -193,8 +193,8 @@ export default class View extends Component {
               <p>${assumptions.dataBreachCost}</p>
               <p>{assumptions.chanceOfDataBreach}</p>
               <p>{assumptions.dataBreachCost * assumptions.chanceOfDataBreach}</p>
-              <p>{this.state.inputs.securityComplienceTime}</p>
-              <strong>${this.state.inputs.securityComplienceTime * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach)}</strong>
+              <p>{this.state.inputs.dataBreachRisk}</p>
+              <strong>${this.state.inputs.dataBreachRisk * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach)}</strong>
             </div>
           </div>
         </div>
@@ -221,8 +221,8 @@ export default class View extends Component {
               <p>{this.state.inputs.totalEmployees}</p>
               <p>${assumptions.emailCostPerEmployee}</p>
               <p>${this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee}</p>
-              <p>{this.state.inputs.emailVolume}</p>
-              <strong>${this.state.inputs.emailVolume * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee)}</strong>
+              <p>{this.state.inputs.avgEmails}</p>
+              <strong>${this.state.inputs.avgEmails * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee)}</strong>
             </div>
           </div>
         </div>

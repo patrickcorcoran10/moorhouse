@@ -14,9 +14,11 @@ module.exports = function(sequelize, DataTypes) {
         complienceAndSecuritySavings: DataTypes.STRING,
         automationSavings: DataTypes.STRING,
         annualCompanyValue: DataTypes.STRING,
-        roi: DataTypes.STRING,
+        standardROI: DataTypes.STRING,
+        plusROI: DataTypes.STRING,
         opportunity: DataTypes.BOOLEAN,
-        planSelect: DataTypes.STRING
+        planSelect: DataTypes.STRING,
+        revenue: DataTypes.STRING
     });
     return Moorhouse;
 };

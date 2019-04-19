@@ -17,7 +17,9 @@ module.exports = function(app) {
             complienceAndSecuritySavings: req.body.complienceAndSecuritySavings,
             automationSavings: req.body.automationSavings,
             annualCompanyValue: req.body.annualCompanyValue,
-            roi: req.body.roi,
+            standardROI: req.body.standardROI,
+            plusROI: req.body.plusROI,
+            revenue: req.body.revenue,
             completed: false,
             opportunity: true,
         })
@@ -59,7 +61,7 @@ module.exports = function(app) {
         })
     });
 
-// Get Route for Display Page
+// Get Route for View Page
     app.get('/api/view:id', function(req, res) {
         db.Moorhouses.findAll({
             where: {
@@ -69,6 +71,30 @@ module.exports = function(app) {
         .then(function(dbData) {
             res.json(dbData)
         });
+    });
+// Get Route for the Display Page
+    app.get('/api/display:id', function(req, res) {
+        db.Moorhouses.findAll({
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(function(dbData) {
+            res.json(dbData)
+        })
+    });
+// UPDATE Route for the View Page
+    app.put('/api/update:id', function(req, res) {
+        db.Moorhouses.update({
+            planSelect: req.body.planSelect,
+        }, {
+            where: {
+                id: req.params.id
+            }
+        })
+        .then(function(dbData) {
+            res.json(dbData)
+        })
     });
 // Get Route for Dashboard that will display the Number of Records in the Database coded with "Opportunity"
     app.get('/api/dashboard/number-of-opps', function(req, res) {
