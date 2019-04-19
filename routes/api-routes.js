@@ -119,6 +119,17 @@ module.exports = function(app) {
             res.json(dbData)
         })
     });
+// Get Route for the Dashboard Revenue Array
+    app.get('/api/dashboard/revs', function(req, res) {
+        db.Moorhouses.findAll({
+            where: {
+                completed: false
+            }
+        })
+        .then(function(dbData) {
+            res.json(dbData)
+        })
+    });
 // Update Route on the Opps page for Completed
     app.put('/api/opps/complete:id', function(req, res) {
         db.Moorhouses.update({

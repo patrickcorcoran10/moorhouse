@@ -8,7 +8,9 @@ export default class Dashboard extends Component {
         super(props);
         this.state = {
             inputs: {},
-            result: ''
+            result: [],
+            completed: [],
+            revenues: ''
         }
     };
 
@@ -19,7 +21,7 @@ export default class Dashboard extends Component {
             .get('/api/dashboard/number-of-opps')
             .set('Accept', 'application/json')
             .then(res => {
-                console.log(res.body);
+                // console.log(res.body);
                 result = res.body;
                 console.log(result.length)
                 this.setState({
@@ -31,12 +33,34 @@ export default class Dashboard extends Component {
             .get('/api/dashboard/number-of-completed')
             .set('Accept', 'application/json')
             .then(res => {
-                console.log(res.body);
+                // console.log(res.body);
                 completed = res.body;
                 this.setState({
                     completed: completed.length
                 })
             });
+        let revenues = [];
+        let displayRevenue = [];
+        let sum = '';
+        request 
+            .get('/api/dashboard/revs')
+            .set('Accept', 'application/json')
+            .then(res => {
+                console.log(res.body);
+                revenues = res.body;
+                for (let i = 0; i < revenues.length; i++) {
+                    // console.log(revenues[i].plusRevenue);
+                    displayRevenue.push(parseInt(revenues[i].plusRevenue));
+                    console.log(displayRevenue);
+                    sum = displayRevenue.reduce((partial_sum, a) => partial_sum + a);
+                    console.log(sum);
+                };
+                this.setState({
+                    revenues: sum,
+                })
+                
+            });
+        
     }
 
   render() {
@@ -68,7 +92,7 @@ export default class Dashboard extends Component {
             <div className='col-md-3'>
                 <div className='circle'>
                     <h6>Potential Monthly Revenue</h6>
-                    <h6 className='number'>$$</h6>
+                    <h6 className='number'>${this.state.revenues}</h6>
                 </div> 
             </div>
             <div className='col-md-1'>

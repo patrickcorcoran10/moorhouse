@@ -158,8 +158,8 @@ export default class Opps extends Component {
                   <th>Company</th>
                   <th>Email</th> 
                   <th>Employees</th>
-                  <th>Revenue</th>
-                  <th>Potential Revenue</th>
+                  <th>Standard Plan Revenue</th>
+                  <th>Plus Plan Revenue</th>
                   <th>View</th>
                   <th>Complete</th>
                   <th>Delete</th>
@@ -169,11 +169,11 @@ export default class Opps extends Component {
                   <td>{data.companyName}</td>
                   <td>{data.email}</td> 
                   <td>{data.totalEmployees}</td>
-                  <td>{data.revenue}</td>
-                  <td>{data.potentialRevenue}</td> 
-                  <td><button type="button" className="btn btn-outline-dark" value={data.id} onClick={this.view.bind(this)}>Detailed View</button></td>
-                  <td><button type="button" className="btn btn-outline-success" value={data.id} onClick={this.complete.bind(this)}>Mark Complete</button></td>
-                  <td><button  className="btn btn-outline-danger" value={data.id} onClick={this.delete.bind(this)}>Delete this Record</button></td> 
+                  <td>{data.standardRevenue}</td>
+                  <td>{data.plusRevenue}</td> 
+                  <td><button type="button" className="btn btn-outline-dark" value={data.id} onClick={this.view.bind(this)}><span role="img">&#128202;</span></button></td>
+                  <td><button type="button" className="btn btn-outline-success" value={data.id} onClick={this.complete.bind(this)}><span role="img">&#10003;</span></button></td>
+                  <td><button  className="btn btn-outline-danger" value={data.id} onClick={this.delete.bind(this)}> X </button></td> 
                 </tr>
                 ))}
               </tbody>
@@ -193,7 +193,7 @@ export default class Opps extends Component {
                   <th>Company</th>
                   <th>Email</th> 
                   <th>Employees</th>
-                  <th>Revenue</th>
+                  <th>Plan Choice</th>
                   <th>Revenue Generated</th>
                   <th>View</th>
                   <th>Mark as Not Complete</th>
@@ -204,11 +204,12 @@ export default class Opps extends Component {
                   <td>{data.companyName}</td>
                   <td>{data.email}</td> 
                   <td>{data.totalEmployees}</td>
-                  <td>{data.revenue}</td>
+                  {(data.planSelect === '8') ? <td>Standard</td> : <td>Plus</td>}
+                  {/* <td>{data.planSelect}</td> */}
                   <td>{data.potentialRevenue}</td> 
-                  <td><button type="button" className="btn btn-outline-dark" value={data.id} onClick={this.view.bind(this)}>Detailed View</button></td>
-                  <td><button type="button" className="btn btn-outline-success" value={data.id} onClick={this.notComplete.bind(this)}>Mark as Not Complete</button></td>
-                  <td><button  className="btn btn-outline-danger" value={data.id} onClick={this.delete.bind(this)}>Delete this Record</button></td> 
+                  <td><button type="button" className="btn btn-outline-dark" value={data.id} onClick={this.view.bind(this)}><span role='img'>&#128202;</span></button></td>
+                  <td><button type="button" className="btn btn-outline-success" value={data.id} onClick={this.notComplete.bind(this)}><span role='img'>&#128257;</span></button></td>
+                  <td><button  className="btn btn-outline-danger" value={data.id} onClick={this.delete.bind(this)}> X </button></td> 
                 </tr>
                 ))}
               </tbody>
