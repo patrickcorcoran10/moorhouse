@@ -98,7 +98,7 @@ export default class Dashboard extends Component {
             </div>
             <div className='col-md-3'>
                 <div className='circle'>
-                    <h6>Percentage of Opportunities Completed </h6>
+                    <h6>Opportunities Completed </h6>
                     <h6 className='number'>{((parseInt(this.state.completed)/parseInt(this.state.result))*100).toFixed(0)}%</h6>
                 </div>
             </div>
