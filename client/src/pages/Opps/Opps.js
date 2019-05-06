@@ -171,7 +171,7 @@ export default class Opps extends Component {
                   <td>{data.totalEmployees}</td>
                   <td>${data.standardRevenue}</td>
                   <td>${data.plusRevenue}</td> 
-                  <td><button type="button" className="btn btn-outline-dark" value={data.id} onClick={this.view.bind(this)}>&#128202;</button></td>
+                  <td><span role='img' aria-label="chart" type="button" className="btn btn-outline-dark" value={data.id} onClick={this.view.bind(this)}>&#128202;</span></td>
                   <td><button type="button" className="btn btn-outline-success" value={data.id} onClick={this.complete.bind(this)}>&#10003;</button></td>
                   <td><button  className="btn btn-outline-danger" value={data.id} onClick={this.delete.bind(this)}> X </button></td> 
                 </tr>
@@ -207,8 +207,8 @@ export default class Opps extends Component {
                   {(data.planSelect === '8') ? <td>Standard</td> : <td>Plus</td>}
                   {/* <td>{data.planSelect}</td> */}
                   <td>${data.potentialRevenue}</td> 
-                  <td><button type="button" className="btn btn-outline-dark" value={data.id} onClick={this.view.bind(this)}>&#128202;</button></td>
-                  <td><button type="button" className="btn btn-outline-success" value={data.id} onClick={this.notComplete.bind(this)}>&#128257;</button></td>
+                  <td><span type="button"  role='img' aria-label="chart" className="btn btn-outline-dark" value={data.id} onClick={this.view.bind(this)}>&#128202;</span></td>
+                  <td><span type="button" role='img' aria-label="reverse" className="btn btn-outline-success" value={data.id} onClick={this.notComplete.bind(this)}>&#128257;</span></td>
                   <td><button  className="btn btn-outline-danger" value={data.id} onClick={this.delete.bind(this)}> X </button></td> 
                 </tr>
                 ))}

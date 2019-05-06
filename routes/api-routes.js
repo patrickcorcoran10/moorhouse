@@ -14,7 +14,7 @@ module.exports = function(app) {
             email: req.body.email,
             dataCollectionSavings: req.body.dataCollectionSavings,
             dataProcessingSavings: req.body.dataProcessingSavings,
-            complienceAndSecuritySavings: req.body.complienceAndSecuritySavings,
+            complianceAndSecuritySavings: req.body.complianceAndSecuritySavings,
             automationSavings: req.body.automationSavings,
             annualCompanyValue: req.body.annualCompanyValue,
             standardROI: req.body.standardROI,

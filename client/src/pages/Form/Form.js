@@ -19,7 +19,7 @@ export default class Form extends Component {
                 completed: false,
                 dataCollectionSavings: '',
                 dataProcessingSavings: '',
-                complienceAndSecuritySavings: '',
+                complianceAndSecuritySavings: '',
                 automationSavings: '',
                 annualCompanyValue: '',
                 standardROI: '',
@@ -40,9 +40,18 @@ export default class Form extends Component {
         this.submit = this.submit.bind(this);
         this.reset = this.reset.bind(this);
         this.toggle = this.toggle.bind(this);
+        this.acceptPlanSelect = this.acceptPlanSelect.bind(this);
     };
     // First Page Functions
+    acceptPlanSelect = e => {
+        this.setState({
+            inputs: {
+                planSelect: this.refs.planSelect.value
+            }
+        })
+    }
     acceptCompanyName = e => {
+        console.log(e.target.value);
         this.setState({
                 companyName: this.refs.companyName.value
         });
@@ -118,7 +127,7 @@ export default class Form extends Component {
                     email: this.refs.email.value,
                     dataCollectionSavings: this.refs.collectingData.value * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value)),
                     dataProcessingSavings: this.refs.analyzingData.value * parseFloat(this.refs.avgCostPerEmployee.value) * (this.refs.totalEmployees.value * (assumptions.processData * assumptions.annualHours)),
-                    complienceAndSecuritySavings: this.refs.dataBreachRisk.value * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach),
+                    complianceAndSecuritySavings: this.refs.dataBreachRisk.value * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach),
                     automationSavings: this.refs.avgEmails.value * (this.refs.totalEmployees.value * assumptions.emailCostPerEmployee),
                     annualCompanyValue: (this.refs.avgEmails.value * (this.refs.totalEmployees.value * assumptions.emailCostPerEmployee))+(this.refs.dataBreachRisk.value * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(this.refs.analyzingData.value * parseFloat(this.refs.avgCostPerEmployee.value) * (this.refs.totalEmployees.value * (assumptions.processData * assumptions.annualHours)))+(this.refs.collectingData.value * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value))),
                     standardROI: ((parseFloat(this.refs.avgEmails.value) * (parseFloat(this.refs.totalEmployees.value * assumptions.emailCostPerEmployee)))+(parseFloat(this.refs.dataBreachRisk.value) * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(parseInt(this.refs.analyzingData.value) * parseInt(this.refs.avgCostPerEmployee.value) * (parseInt(this.refs.totalEmployees.value) * (assumptions.processData * assumptions.annualHours)))+(parseInt(this.refs.collectingData.value) * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value))))/(assumptions.standardPlan * 12 * parseInt(this.refs.totalEmployees.value)),
@@ -152,7 +161,7 @@ export default class Form extends Component {
                         completed: '',
                         dataCollectionSavings: '',
                         dataProcessingSavings: '',
-                        complienceAndSecuritySavings: '',
+                        complianceAndSecuritySavings: '',
                         automationSavings: '',
                         annualCompanyValue: '',
                         standardROI: '',
@@ -187,7 +196,7 @@ export default class Form extends Component {
             completed: '',
             dataCollectionSavings: '',
             dataProcessingSavings: '',
-            complienceAndSecuritySavings: '',
+            complianceAndSecuritySavings: '',
             automationSavings: '',
             annualCompanyValue: '',
             standardROI: '',
@@ -222,7 +231,7 @@ export default class Form extends Component {
             email: '',
             dataCollectionSavings: this.refs.collectingData.value * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value)),
             dataProcessingSavings: this.refs.analyzingData.value * parseFloat(this.refs.avgCostPerEmployee.value) * (this.refs.totalEmployees.value * (assumptions.processData * assumptions.annualHours)),
-            complienceAndSecuritySavings: this.refs.dataBreachRisk.value * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach),
+            complianceAndSecuritySavings: this.refs.dataBreachRisk.value * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach),
             automationSavings: this.refs.avgEmails.value * (this.refs.totalEmployees.value * assumptions.emailCostPerEmployee),
             annualCompanyValue: (this.refs.avgEmails.value * (this.refs.totalEmployees.value * assumptions.emailCostPerEmployee))+(this.refs.dataBreachRisk.value * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(this.refs.analyzingData.value * parseFloat(this.refs.avgCostPerEmployee.value) * (this.refs.totalEmployees.value * (assumptions.processData * assumptions.annualHours)))+(this.refs.collectingData.value * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value))),
             standardROI: ((this.refs.avgEmails.value * (this.refs.totalEmployees.value * assumptions.emailCostPerEmployee))+(this.refs.dataBreachRisk.value * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(this.refs.analyzingData.value * parseFloat(this.refs.avgCostPerEmployee.value) * (this.refs.totalEmployees.value * (assumptions.processData * assumptions.annualHours)))+(this.refs.collectingData.value * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value)))/(assumptions.standardPlan * 12 * parseInt(this.refs.totalEmployees.value))).toFixed(2),
@@ -271,9 +280,9 @@ export default class Form extends Component {
                   <div className="input-group mb-3">
                         <select ref='collectingData' onChange={this.collectingData} className="custom-select" id="inputGroupSelect02">
                             <option>Choose...</option>
-                            <option value='.025'>Low (Less than 6 hours/week)</option>
-                            <option value=".05">Average (About 6.4 hours/week)</option>
-                            <option value=".075">High (More than 7 hours/week)</option>
+                            <option value='.025'> Less than 6 hours/week</option>
+                            <option value=".05"> About 6.4 hours/week</option>
+                            <option value=".075"> More than 7 hours/week</option>
                         </select>
                         <div className="input-group-append">
                             <label className="input-group-text" htmlFor="inputGroupSelect02">Options</label>
@@ -285,9 +294,9 @@ export default class Form extends Component {
                   <div className="input-group mb-3">
                         <select ref='analyzingData' onChange={this.acceptAnalyzingData} className="custom-select" id="inputGroupSelect02">
                             <option>Choose...</option>
-                            <option value=".025">Low (Less than 6 hours/week)</option>
-                            <option value=".05">Average (About 6 hours/week)</option>
-                            <option value=".075">High (More than 6 hours/week)</option>
+                            <option value=".025"> Less than 6 hours/week</option>
+                            <option value=".05"> About 6 hours/week </option>
+                            <option value=".075"> More than 6 hours/week</option>
                         </select>
                         <div className="input-group-append">
                             <label className="input-group-text" htmlFor="inputGroupSelect02">Options</label>
@@ -311,13 +320,21 @@ export default class Form extends Component {
                   <div className="input-group mb-3">
                         <select ref='avgEmails' onChange={this.acceptAvgEmails} className="custom-select" id="inputGroupSelect02">
                             <option>Choose...</option>
-                            <option value='.05'>Low (Less than 300 emails/Week)</option>
-                            <option value='.075'>Average (About 300 emails/Week)</option>
-                            <option value='.1'>High (More than 300 emails/Week)</option>
+                            <option value='.05'> Less than 300 emails/Week</option>
+                            <option value='.075'> About 300 emails/Week </option>
+                            <option value='.1'> More than 300 emails/Week</option>
                         </select>
                         <div className="input-group-append">
                             <label className="input-group-text" htmlFor="inputGroupSelect02">Options</label>
                         </div>
+                    </div>
+                   <p> BotCo's Plan Offerings: </p> 
+                   <div className="form-group form-check">
+                        <input type="checkbox" ref="planSelect" className="form-check-input" id="exampleCheck1" onChange={this.accpetPlanSelect}></input>
+                        <label className="form-check-label" value='8' for="exampleCheck1">Standard Plan</label>
+                        <br/>
+                        <input type="checkbox" ref="planSelect" className="form-check-input" id="exampleCheck1" onChange={this.accpetPlanSelect}></input>
+                        <label className="form-check-label" value='15' for="exampleCheck1">Plus Plan</label>
                     </div>
               </div>
               <div className='col-md-2'>

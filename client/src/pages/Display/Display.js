@@ -64,7 +64,7 @@ import axios from 'axios';
                     <div className="graph">
                         <Bar 
                             data={{
-                                labels: ['Data Collection Savings', 'Data Processing Savings', 'Complience and Security Savings', 'Automation Savings'],
+                                labels: ['Data Collection Savings', 'Data Processing Savings', 'Compliance and Security Savings', 'Automation Savings'],
                                 datasets: [{
                                     // label: "Savings",
                                     data: [

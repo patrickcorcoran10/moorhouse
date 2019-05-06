@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
         completed: DataTypes.BOOLEAN,
         dataCollectionSavings: DataTypes.STRING,
         dataProcessingSavings: DataTypes.STRING,
-        complienceAndSecuritySavings: DataTypes.STRING,
+        complianceAndSecuritySavings: DataTypes.STRING,
         automationSavings: DataTypes.STRING,
         annualCompanyValue: DataTypes.STRING,
         standardROI: DataTypes.STRING,
