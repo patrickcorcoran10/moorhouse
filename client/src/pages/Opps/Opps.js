@@ -15,6 +15,7 @@ export default class Opps extends Component {
     this.complete = this.complete.bind(this);
     this.view = this.view.bind(this);
     this.notComplete = this.notComplete.bind(this);
+    this.componentWillMount = this.componentWillMount.bind(this);
   };
   
   componentWillMount() {
@@ -30,7 +31,7 @@ export default class Opps extends Component {
           console.log(err)
       });
     request
-      .get('/api/opps/completed')
+      .get('/api/opps-completed')
       .then(res => {
         this.setState({
             inputsCompleted: res.body
@@ -73,7 +74,6 @@ export default class Opps extends Component {
     })
     .then(function(response) {
       console.log(response);
-      // this.componentWillMount();
       request
       .get('/api/opps')
       .then(res => {
@@ -85,7 +85,7 @@ export default class Opps extends Component {
           console.log(err)
       });
     request
-      .get('/api/opps/completed')
+      .get('/api/opps-completed')
       .then(res => {
         console.log(res);
         this.setState({
@@ -101,22 +101,18 @@ export default class Opps extends Component {
       console.log(error)
     });
     alert("This Record is Now Completed.")
-    
-    
-
   };
 
   notComplete = e => {
-    // e.preventDefault();
-    console.log('We are moving this record from the complete list to the not yet complete list.');
+    e.preventDefault();
+    console.log('We are moving this record from the complete list to the not yet complete list.', e.target.value);
     let updateID = e.target.value;
     console.log(updateID);
-    axios.put('/api/opps/notComplete' + updateID, {
+    axios.put('/api/opps-notComplete' + updateID, {
       completed: false
     })
     .then(function(response) {
       console.log(response);
-      // this.componentWillMount();
       request
       .get('/api/opps')
       .then(res => {
@@ -128,7 +124,7 @@ export default class Opps extends Component {
           console.log(err)
       });
     request
-      .get('/api/opps/completed')
+      .get('/api/opps-completed')
       .then(res => {
         this.setState({
             inputsCompleted: res.body
@@ -141,7 +137,8 @@ export default class Opps extends Component {
     .catch(function(error) {
       console.log(error)
     });
-    alert("This Record has been moved to the Not-yet-completed list.")
+    alert("This Record has been moved to the Currently Opportunities list.")
+    this.componentWillMount();
   };
 
   render() {
@@ -196,7 +193,7 @@ export default class Opps extends Component {
                   <th>Plan Choice</th>
                   <th>Revenue Generated</th>
                   <th>View</th>
-                  <th>Mark as Not Complete</th>
+                  <th>Mark as Current Opportunity</th>
                   <th>Delete</th>
                 </tr>
                 {this.state.inputsCompleted.map((data, index) => (
@@ -205,7 +202,6 @@ export default class Opps extends Component {
                   <td>{data.email}</td> 
                   <td>{data.totalEmployees}</td>
                   {(data.planSelect === '8') ? <td>Standard</td> : <td>Plus</td>}
-                  {/* <td>{data.planSelect}</td> */}
                   <td>${data.potentialRevenue}</td> 
                   <td><span type="button"  role='img' aria-label="chart" className="btn btn-outline-dark" value={data.id} onClick={this.view.bind(this)}>&#128202;</span></td>
                   <td><span type="button" role='img' aria-label="reverse" className="btn btn-outline-success" value={data.id} onClick={this.notComplete.bind(this)}>&#128257;</span></td>

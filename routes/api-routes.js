@@ -40,7 +40,7 @@ module.exports = function(app) {
         });
     });
 // Get Request for Opps Page Completed Table
-    app.get('/api/opps/completed', function(req, res) {
+    app.get('/api/opps-completed', function(req, res) {
         db.Moorhouses.findAll({
             where: {
                 completed: true
@@ -131,7 +131,7 @@ module.exports = function(app) {
         })
     });
 // Update Route on the Opps page for Completed
-    app.put('/api/opps/complete:id', function(req, res) {
+    app.put('/api/opps-complete:id', function(req, res) {
         db.Moorhouses.update({
             completed: true,
         }, {
@@ -144,7 +144,7 @@ module.exports = function(app) {
         })
     });
 // Update Route on the Opps page for Not Completed
-    app.put('/api/opps/notComplete:id', function(req, res) {
+    app.put('/api/opps-notComplete:id', function(req, res) {
         db.Moorhouses.update({
             completed: false,
         }, {

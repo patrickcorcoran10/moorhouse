@@ -13,17 +13,14 @@
     "heroku-postbuild": "npm run build"
   },
   "engines": {
-    "node": "10.0.0"
+    "node": "10.0.0",
+    "npm": "5.6.0"
   },
   "author": "pc",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^3.5.0",
     "nodemon": "^1.11.0"
-  },
-  "engines": {
-    "node": "10.0.0",
-    "npm": "5.6.0"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -36,6 +33,7 @@
     "mysql2": "^1.6.1",
     "npm": "^6.4.1",
     "path": "^0.12.7",
+    "react-router-dom": "^5.0.0",
     "sequelize": "^4.43.1"
   }
 }
