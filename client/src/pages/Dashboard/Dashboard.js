@@ -64,7 +64,6 @@ export default class Dashboard extends Component {
             }
         };
         monthData.push(january, february, march, april, may, june, july, august, september, october, november, december);
-        console.log(monthData);
         this.setState({
             monthData: monthData
         })
@@ -138,9 +137,7 @@ export default class Dashboard extends Component {
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: 
-                this.state.monthData
-            
+            data: this.state.monthData
           }
         ]
       };
