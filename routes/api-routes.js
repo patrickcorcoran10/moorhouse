@@ -12,6 +12,7 @@ module.exports = function(app) {
             dataBreachRisk: req.body.dataBreachRisk,
             avgEmails: req.body.avgEmails,
             email: req.body.email,
+            planSelect: req.body.planSelect,
             dataCollectionSavings: req.body.dataCollectionSavings,
             dataProcessingSavings: req.body.dataProcessingSavings,
             complianceAndSecuritySavings: req.body.complianceAndSecuritySavings,
@@ -61,6 +62,14 @@ module.exports = function(app) {
             res.json(dbData)
         })
     });
+// Get Route for Graph on Dashboard Page
+    app.get('/api/opps/month', function(req, res) {
+        db.Moorhouses.findAll({})
+        .then(function(dbData) {
+            res.json(dbData)
+        })
+    });
+    
 
 // Get Route for View Page
     app.get('/api/view:id', function(req, res) {

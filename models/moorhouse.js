@@ -8,6 +8,7 @@ module.exports = function(sequelize, DataTypes) {
         dataBreachRisk: DataTypes.STRING,
         avgEmails: DataTypes.STRING,
         email: DataTypes.STRING,
+        planSelect: DataTypes.STRING,
         completed: DataTypes.BOOLEAN,
         dataCollectionSavings: DataTypes.STRING,
         dataProcessingSavings: DataTypes.STRING,
@@ -21,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
         opportunity: DataTypes.BOOLEAN,
         planSelect: DataTypes.STRING,
         standardRevenue: DataTypes.STRING,
-        plusRevenue: DataTypes.STRING
+        plusRevenue: DataTypes.STRING,
     });
     return Moorhouse;
 };

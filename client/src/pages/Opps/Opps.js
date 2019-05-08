@@ -20,6 +20,7 @@ export default class Opps extends Component {
   
   componentWillMount() {
     console.log("We are now mounted on the Opps page");
+    
     request
       .get('/api/opps')
       .then(res => {
@@ -168,9 +169,10 @@ export default class Opps extends Component {
                   <td>{data.totalEmployees}</td>
                   <td>${data.standardRevenue}</td>
                   <td>${data.plusRevenue}</td> 
-                  <td><span role='img' aria-label="chart" type="button" className="btn btn-outline-dark" value={data.id} onClick={this.view.bind(this)}>&#128202;</span></td>
-                  <td><button type="button" className="btn btn-outline-success" value={data.id} onClick={this.complete.bind(this)}>&#10003;</button></td>
-                  <td><button  className="btn btn-outline-danger" value={data.id} onClick={this.delete.bind(this)}> X </button></td> 
+                  {/* eslint-disable-next-line */}
+                  <td><button role='img' aria-label="chart" type="button" className="btn btn-outline-dark" value={data.id} onClick={this.view}>&#128202;</button></td>
+                  <td><button type="button" className="btn btn-outline-success" value={data.id} onClick={this.complete}>&#10003;</button></td>
+                  <td><button  className="btn btn-outline-danger" value={data.id} onClick={this.delete}> X </button></td> 
                 </tr>
                 ))}
               </tbody>

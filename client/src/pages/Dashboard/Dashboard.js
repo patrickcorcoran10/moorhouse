@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import Graph from '../../components/Graph/Graph';
 import '../../pages/Dashboard/Dashboard.css';
 import request from 'superagent';
+import axios from 'axios';
+import {Line} from 'react-chartjs-2';
+
+
 
 export default class Dashboard extends Component {
     constructor(props) {
@@ -10,12 +13,63 @@ export default class Dashboard extends Component {
             inputs: {},
             result: [],
             completed: [],
-            revenues: ''
-        }
+            revenues: '',
+            monthData: []
+        };
     };
-
     componentWillMount() {
-        console.log('We are mounted on the Dashboard Page')
+        console.log('We are mounted on the Dashboard Page');
+        let january = 15;
+        let february = 12;
+        let march = 18;
+        let april = 23;
+        let may = 0;
+        let june = 0;
+        let july = 0;
+        let august = 0;
+        let september = 0;
+        let october = 0;
+        let november = 0;
+        let december = 0;
+        let monthData = [];
+        axios.get('/api/opps/month')
+        .then(res => {
+        for (let i = 0; i < res.data.length; i++) {
+        console.log(res.data[i].createdAt.slice(5, 7))
+            if (res.data[i].createdAt.slice(5, 7) === '01') {
+                january++;
+            } else if (res.data[i].createdAt.slice(5, 7) === '02') {
+                february++;
+            } else if (res.data[i].createdAt.slice(5, 7) === '03') {
+                march++;
+            } else if (res.data[i].createdAt.slice(5, 7) === '04') {
+                april++;
+            } else if (res.data[i].createdAt.slice(5, 7) === '05') {
+                may++;
+                console.log(may);
+            } else if (res.data[i].createdAt.slice(5, 7) === '06') {
+                june++; 
+            } else if (res.data[i].createdAt.slice(5, 7) === '07') {
+                july++;
+            } else if (res.data[i].createdAt.slice(5, 7) === '08') {
+                august++;   
+            } else if (res.data[i].createdAt.slice(5, 7) === '09') {
+                september++;
+            } else if (res.data[i].createdAt.slice(5, 7) === '10') {
+                october++;
+            } else if (res.data[i].createdAt.slice(5, 7) === '11') {
+                november++;
+            } else {
+                december++;
+            }
+        };
+        monthData.push(january, february, march, april, may, june, july, august, september, october, november, december);
+        console.log(monthData);
+        this.setState({
+            monthData: monthData
+        })
+        
+        });
         let result = [];
         request
             .get('/api/dashboard/number-of-opps')
@@ -23,7 +77,7 @@ export default class Dashboard extends Component {
             .then(res => {
                 // console.log(res.body);
                 result = res.body;
-                console.log(result.length)
+                // console.log(result.length)
                 this.setState({
                     result: result.length
                 })
@@ -46,14 +100,14 @@ export default class Dashboard extends Component {
             .get('/api/dashboard/revs')
             .set('Accept', 'application/json')
             .then(res => {
-                console.log(res.body);
+                // console.log(res.body);
                 revenues = res.body;
                 for (let i = 0; i < revenues.length; i++) {
                     // console.log(revenues[i].plusRevenue);
                     displayRevenue.push(parseInt(revenues[i].plusRevenue));
-                    console.log(displayRevenue);
+                    // console.log(displayRevenue);
                     sum = displayRevenue.reduce((partial_sum, a) => partial_sum + a);
-                    console.log(sum);
+                    // console.log(sum);
                 };
                 this.setState({
                     revenues: sum,
@@ -62,6 +116,34 @@ export default class Dashboard extends Component {
     };
 
   render() {
+    const data = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        datasets: [
+          {
+            label: 'Opportunities Created',
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: 'rgba(75,192,192,0.4)',
+            borderColor: 'rgba(75,192,192,1)',
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: 'rgba(75,192,192,1)',
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+            pointHoverBorderColor: 'rgba(220,220,220,1)',
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: 
+                this.state.monthData
+            
+          }
+        ]
+      };
     return (
       <div className='container'>
         <div className='row'>
@@ -108,7 +190,10 @@ export default class Dashboard extends Component {
             <div className='col-md-2'>
             </div>
             <div className='col-md-8'>
-                <Graph/>
+                <div>
+                    <h2>New Opportunities Over Time</h2>
+                    <Line data={data} />
+                </div>
             </div>
             <div className='col-md-2'>
             </div>

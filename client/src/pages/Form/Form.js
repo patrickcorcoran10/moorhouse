@@ -92,13 +92,15 @@ export default class Form extends Component {
         this.setState({
             email: this.refs.email.value
         })
-    }
+    };
+    acceptPlanSelect = e => {
+        this.setState({
+            planSelect: this.refs.planSelect.value,
+        })
+    };
     // Buttons and Console.logging
     componentDidUpdate() {
         console.log(this.state)
-    };
-    calculations() {
-
     };
 
     submit = e => {
@@ -125,6 +127,7 @@ export default class Form extends Component {
                     dataBreachRisk: this.refs.dataBreachRisk.value,
                     avgEmails: this.refs.avgEmails.value,
                     email: this.refs.email.value,
+                    planSelect: this.refs.planSelect.value,
                     dataCollectionSavings: this.refs.collectingData.value * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value)),
                     dataProcessingSavings: this.refs.analyzingData.value * parseFloat(this.refs.avgCostPerEmployee.value) * (this.refs.totalEmployees.value * (assumptions.processData * assumptions.annualHours)),
                     complianceAndSecuritySavings: this.refs.dataBreachRisk.value * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach),
@@ -148,6 +151,7 @@ export default class Form extends Component {
                 this.refs.dataBreachRisk.value = '';
                 this.refs.avgEmails.value = '';
                 this.refs.email.value = '';
+                this.refs.planSelect.value = '';
                 this.setState({
                     inputs: {
                         companyName: '',
@@ -164,8 +168,7 @@ export default class Form extends Component {
                         complianceAndSecuritySavings: '',
                         automationSavings: '',
                         annualCompanyValue: '',
-                        standardROI: '',
-                        plusROI: '',
+                        planSelect: '',
                         opportunity: '',
                         revenue: ''
                     },
@@ -184,6 +187,7 @@ export default class Form extends Component {
         this.refs.analyzingData.value = '';
         this.refs.dataBreachRisk.value = '';
         this.refs.avgEmails.value = '';
+        this.refs.planSelect.value = '';
         this.setState({
             companyName: '',
             totalEmployees: '',
@@ -193,14 +197,13 @@ export default class Form extends Component {
             dataBreachRisk: '',
             avgEmails: '',
             email: '',
+            planSelect: '',
             completed: '',
             dataCollectionSavings: '',
             dataProcessingSavings: '',
             complianceAndSecuritySavings: '',
             automationSavings: '',
             annualCompanyValue: '',
-            standardROI: '',
-            plusROI: '',
             opportunity: '',
             revenue: ''
         });
@@ -214,8 +217,7 @@ export default class Form extends Component {
             collectData: .17,
             processData: .16,
             annualHours: 2000,
-            standardPlan: 8,
-            plusPlan: 15
+            
         };
         console.log(assumptions)
         this.setState(prevState => ({
@@ -229,6 +231,7 @@ export default class Form extends Component {
             dataBreachRisk: this.refs.dataBreachRisk.value,
             avgEmails: this.refs.avgEmails.value,
             email: '',
+            planSelect: this.refs.planSelect.value,
             dataCollectionSavings: this.refs.collectingData.value * ((assumptions.collectData * assumptions.annualHours) * parseInt(this.refs.totalEmployees.value)) * (parseInt(this.refs.avgCostPerEmployee.value)),
             dataProcessingSavings: this.refs.analyzingData.value * parseFloat(this.refs.avgCostPerEmployee.value) * (this.refs.totalEmployees.value * (assumptions.processData * assumptions.annualHours)),
             complianceAndSecuritySavings: this.refs.dataBreachRisk.value * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach),
@@ -328,13 +331,17 @@ export default class Form extends Component {
                             <label className="input-group-text" htmlFor="inputGroupSelect02">Options</label>
                         </div>
                     </div>
+                    <hr/>
                    <p> BotCo's Plan Offerings: </p> 
-                   <div className="form-group form-check">
-                        <input type="checkbox" ref="planSelect" className="form-check-input" id="exampleCheck1" onChange={this.accpetPlanSelect}></input>
-                        <label className="form-check-label" value='8' for="exampleCheck1">Standard Plan</label>
-                        <br/>
-                        <input type="checkbox" ref="planSelect" className="form-check-input" id="exampleCheck1" onChange={this.accpetPlanSelect}></input>
-                        <label className="form-check-label" value='15' for="exampleCheck1">Plus Plan</label>
+                   <div className="input-group mb-3">
+                        <select ref='planSelect' onChange={this.acceptPlanSelect} className="custom-select" id="inputGroupSelect02">
+                            <option>Choose...</option>
+                            <option value='8'> Standard Plan</option>
+                            <option value='15'> Plus Plan </option>
+                        </select>
+                        <div className="input-group-append">
+                            <label className="input-group-text" htmlFor="inputGroupSelect02">Options</label>
+                        </div>
                     </div>
               </div>
               <div className='col-md-2'>
@@ -356,12 +363,12 @@ export default class Form extends Component {
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                 <ModalHeader toggle={this.toggle}>Thank you for your time!</ModalHeader>
                 <ModalBody>
-                    <h5 className='modalText'>Annual Savings: ${this.state.inputs.annualCompanyValue}</h5>
-                    <h5 className='modalText'>This Year's ROI: Between {this.state.inputs.standardROI}% and {this.state.inputs.plusROI}%</h5>
+                    {(this.state.inputs.annualCompanyValue === isNaN) ? <h5 className='modalText'>Not Enough Information Provided</h5> : <h5 className='modalText'>Annual Savings: ${this.state.inputs.annualCompanyValue}</h5>}
+                    <h5 className='modalText'>This Year's ROI:{parseInt(this.state.inputs.planSelect) * parseInt(this.state.inputs.totalEmployees) * 12}% </h5>
                     <p className='modalText'>Please provide your email address:  <input className='modalText' ref='email' placeholder="j.doe@provider.com" onChange={this.acceptEmail}></input></p>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="success" onClick={this.submit}>Submit</Button>{' '}
+                    <Button color="success" onClick={this.submit}>Submit</Button>
                     <Button color="secondary" onClick={this.reset}>OK, but not for me.</Button>
                 </ModalFooter>
                 </Modal>

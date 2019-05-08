@@ -8,7 +8,7 @@ export default class View extends Component {
 
     this.state={
       inputs: {},
-      planSelect: ''
+      // planSelect: ''
     };
     console.log(this.state)
   };
@@ -21,7 +21,6 @@ export default class View extends Component {
       console.log(selected);
       this.setState({
         inputs: selected,
-        planSelect: ''
       });
       console.log(this.state)
     })
@@ -33,29 +32,6 @@ export default class View extends Component {
     this.props.history.push('/company-display');
     this.props.click(idChosen);
   };
-  
-  acceptPlanSelect = (e) => {
-    e.preventDefault();
-    let id = this.state.inputs.id;
-    console.log(id)
-    console.log(e.target.value, this.refs.planSelect.value, id);
-    this.setState({
-      
-        planSelect: this.refs.planSelect.value,
-      
-    })
-    console.log(this.state.planSelect);
-    axios.put('/api/update'+this.state.inputs.id, {
-      planSelect: this.refs.planSelect.value
-    })
-    .then(function(response) {
-      console.log(response);
-    })
-    .catch(function(error) {
-      console.log(error)
-    })
-    };
-  
 
   render() {
     const style = {
@@ -86,17 +62,7 @@ export default class View extends Component {
           </div>
           <div className='col-md-5'>
             <p>Plan Selection</p>
-              <div className="input-group mb-3">
-                  <select ref='planSelect' onChange={this.acceptPlanSelect=this.acceptPlanSelect.bind(this)} className="custom-select" id="inputGroupSelect02">
-                      <option>Choose...</option>
-                      <option value="8">Standard</option>
-                      <option value="15">Plus</option>
-                  </select>
-                  <div className="input-group-append">
-                      <label className="input-group-text" htmlFor="inputGroupSelect02">Options</label>
-                  </div>
-              </div>
-              <button value={this.state.inputs.id} onClick={this.ROI}>View ROI</button>
+            {(this.state.inputs.planSelect === '8') ? <p>Standard Plan</p> : <p>Plus Plan</p>} 
           </div>
           <div className='col-md-1'>
           </div>
@@ -113,12 +79,12 @@ export default class View extends Component {
             <div className='col-sm-8'>
               <p>Time Spent Collecting Data</p>
               <p>Annual Hours</p>
-              <p>Hours spent per worker collecting data</p>
+              <p>Hours Spent Per Worker Collecting Data</p>
               <p>Total Workers</p>
-              <p>Total hours spent collecting data</p>
-              <p>Cost per hour</p>
-              <p>Total cost of collecting data</p>
-              <p>BotCo savings</p>
+              <p>Total Hours Spent Collecting Data</p>
+              <p>Cost Per Hour</p>
+              <p>Total Cost of Collecting Data</p>
+              <p>BotCo Savings</p>
               <strong>Data Collection Savings</strong>
             </div>
             <div className='col-sm-4'>
@@ -147,14 +113,14 @@ export default class View extends Component {
         <div className='col-md-5' id='tableRight'>
           <div className='row'>
             <div className='col-sm-8'>
-              <p>Time spent processing data</p>
+              <p>Time Spent Processing Data</p>
               <p>Annual Hours</p>
-              <p>Hours spent per worker processing data</p>
+              <p>Hours Spent Per Worker Processing Data</p>
               <p>Total Workers</p>
-              <p>Total hours spent processing data</p>
-              <p>Cost per hour</p>
-              <p>Total cost of processing data</p>
-              <p>BotCo savings</p>
+              <p>Total Hours Spent Processing Data</p>
+              <p>Cost Per Hour</p>
+              <p>Total Cost of Processing Data</p>
+              <p>BotCo Savings</p>
               <strong>Data Collection Savings</strong>
             </div>
             <div className='col-sm-4'>
@@ -183,10 +149,10 @@ export default class View extends Component {
         <div className='col-md-5' id='tableRight'>
           <div className='row'>
             <div className='col-sm-8'>
-              <p>Average cost of data breach</p>
-              <p>Chances of data breach</p>
-              <p>Total data breach costs</p>
-              <p>BotCo savings</p>
+              <p>Average Cost of Data Breach</p>
+              <p>Chances of Data Breach</p>
+              <p>Total Data Breach Costs</p>
+              <p>BotCo Savings</p>
               <strong>Compliance and Security Savings</strong>
             </div>
             <div className='col-sm-4'>
@@ -206,15 +172,15 @@ export default class View extends Component {
         <div className='col-md-1'>
         </div>
         <div className='col-md-5' id='tableLeft'>
-          <p>Productivity increase via automation</p>
+          <p>Productivity Increase via Automation</p>
         </div>
         <div className='col-md-5' id='tableRight'>
           <div className='row'>
             <div className='col-sm-8'>
-              <p>Total users</p>
-              <p>Cost of unnecessary emails per user</p>
-              <p>Total email costs</p>
-              <p>BotCo savings</p>
+              <p>Total Users</p>
+              <p>Cost of Unnecessary Emails Per User</p>
+              <p>Total Email Costs</p>
+              <p>BotCo Savings</p>
               <strong>Automation Savings</strong>
             </div>
             <div className='col-sm-4'>
