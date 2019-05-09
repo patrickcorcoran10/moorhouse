@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 if (process.env.NODE_ENV === 'production') {
@@ -22,6 +22,7 @@ if (process.env.NODE_ENV === "production") {
   
   // Define API routes here
   require("./routes/api-routes.js")(app);
+  
   
   // Send every other request (anything else) to the React app
   // Define any API routes before this runs
