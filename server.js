@@ -15,19 +15,24 @@ const db = require('./models');
 
 require('./routes/api-routes')(app);
 
-// app.get('*', function (req, res) {
-//     const index = path.join(__dirname, 'build', 'index.html');
-//     res.sendFile(index);
-// });
-app.get("*", (req, res) => {
-    const url = path.join(__dirname, 'build', 'index.html');
-    if (!url.startsWith('/app/')) // since we're on local windows
-      url = url.substring(1);
-    res.sendFile(url);
+// Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("client/build"));
+  }
+  
+  // Define API routes here
+  require("./routes/api-routes.js")(app);
+  
+  // Send every other request (anything else) to the React app
+  // Define any API routes before this runs
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./client/build/index.html"));
   });
-
-db.sequelize.sync().then(function() {
+  
+  // Syncing our database and logging a message to the user upon success
+  // using db.sequelize.sync({force: true}).then(function() { will reset db every time.
+  db.sequelize.sync().then(function() {
     app.listen(PORT, function() {
-        console.log("We're listening now on PORT " + PORT)
-    })
-});
+      console.log("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.", PORT, PORT);
+    });
+  });
