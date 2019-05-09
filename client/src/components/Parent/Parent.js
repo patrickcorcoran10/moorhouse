@@ -33,14 +33,14 @@ export default class Parent extends Component {
   render() {
     return (
       <div>
-      {/* <Router> */}
+      <Router>
         <Navigation />
           <Route exact path='/' component={Dashboard}/>
           <Route exact path='/form' component={Form}/>
           <Route exact path='/opportunities' render={(props) => <Opps {...props} click={this.view.bind(this)} />} />
           <Route exact path='/company' render={(props) => <View {...props} id={this.state.inputs.id} click={this.ROI.bind(this)}/>}/>
           <Route exact path='/company-display' render={(props) => <Display {...props} id={this.state.inputs.id} />} />
-      {/* </Router> */}
+      </Router>
       </div>
     )
   }
