@@ -23,9 +23,9 @@ app.use(bodyParser.json());
 //     })
 // };
 
-if (process.env.JAWSDB_URL === 'production') {
-    app.use(express.static('client/build'));
-};
+// if (process.env.JAWSDB_URL === 'production') {
+//     app.use(express.static('client/build'));
+// };
 
 const db = require('./models');
 
