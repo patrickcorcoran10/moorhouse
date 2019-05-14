@@ -8,7 +8,6 @@ export default class View extends Component {
 
     this.state={
       inputs: {},
-      // planSelect: ''
     };
     console.log(this.state)
   };
@@ -36,7 +35,7 @@ export default class View extends Component {
   render() {
     const style = {
       container: {
-        paddingTop: '80px'
+        // paddingTop: '80px'
       }
     };
     const assumptions = {
@@ -49,22 +48,19 @@ export default class View extends Component {
     };
     console.log(this.state)
     return (
-      <div style={style.container} className='container'>
+      <div 
+      // style={style.container} 
+      className='container'>
         <div className="row" id="header">
-          <div className='col-md-1'>
+          <div className='col-md-3'>
           </div>
-          <div className="col-md-5">
-              <h4>The Employee Experience ROI Calculator</h4>
-              <br />
-              <h6>{this.state.inputs.companyName}</h6>
-              <br />
+          <div className="col-md-6" id='idea'>
+              <p>The Employee Experience ROI Calculator</p>
+              <p>{this.state.inputs.companyName}</p>
               <p>Client Email: {this.state.inputs.email}</p>
+              <p>Plan Selection: {(this.state.inputs.planSelect === '8') ? <p>Standard Plan</p> : <p>Plus Plan</p>} </p>
           </div>
-          <div className='col-md-5'>
-            <p>Plan Selection</p>
-            {(this.state.inputs.planSelect === '8') ? <p>Standard Plan</p> : <p>Plus Plan</p>} 
-          </div>
-          <div className='col-md-1'>
+          <div className='col-md-3'>
           </div>
       </div>
       <hr/>

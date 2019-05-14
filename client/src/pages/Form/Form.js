@@ -364,7 +364,7 @@ export default class Form extends Component {
                 <ModalHeader toggle={this.toggle}>Thank you for your time!</ModalHeader>
                 <ModalBody>
                     {(this.state.inputs.annualCompanyValue === isNaN) ? <h5 className='modalText'>Not Enough Information Provided</h5> : <h5 className='modalText'>Annual Savings: ${this.state.inputs.annualCompanyValue}</h5>}
-                    <h5 className='modalText'>This Year's ROI:{parseInt(this.state.inputs.planSelect) * parseInt(this.state.inputs.totalEmployees) * 12}% </h5>
+                    <h5 className='modalText'>This Year's ROI:  {parseInt(this.state.inputs.planSelect) * parseInt(this.state.inputs.totalEmployees) * 12}% </h5>
                     <p className='modalText'>Please provide your email address:  <input className='modalText' ref='email' placeholder="j.doe@provider.com" onChange={this.acceptEmail}></input></p>
                 </ModalBody>
                 <ModalFooter>

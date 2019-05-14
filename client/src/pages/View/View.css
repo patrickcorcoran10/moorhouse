@@ -1,11 +1,16 @@
-#header {
+/* #header {
     color: darkblue;
     background: silver;
-}
+    margin-bottom: 2px;
+} */
 
 #tableLeft {
     background: cadetblue;
     text-align: center;
+}
+
+.idea {
+    font-size: 44px;
 }
 
 #tableRight {
@@ -16,7 +21,7 @@
 p {
     padding-top: 3px;
     border: 4px;
-    margin-bottom: 0px;
+    /* margin-bottom: 0px; */
     font-size: 12px;
 }
 

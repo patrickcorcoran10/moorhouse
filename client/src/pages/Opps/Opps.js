@@ -66,7 +66,7 @@ export default class Opps extends Component {
   };
 
   complete = e => {
-    // e.preventDefault();
+    e.preventDefault();
     console.log('we are updating this record to complete');
     let updateID = e.target.value;
     console.log(updateID);
