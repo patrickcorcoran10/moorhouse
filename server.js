@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 //     })
 // };
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.JAWSDB_URL === 'production') {
     app.use(express.static('client/build'));
 };
 
