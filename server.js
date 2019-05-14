@@ -8,33 +8,33 @@ const mysql = require('mysql2')
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-var connection;
-if (process.env.JAWSDB_URL) {
-    // Database is JawsDB on Heroku
-    connection = mysql.createConnection(process.env.JAWSDB_URL);
-} else {
-    // Database is local
-    connection = mysql.createConnection({
-        port: 3306,
-        host: 'localhost',
-        user: 'root',
-        password: 'password',
-        database: 'moorhouseROI'
-    })
-};
-
-// if (process.env.NODE_ENV === 'production') {
-//     app.use(express.static('client/build'));
+// var connection;
+// if (process.env.JAWSDB_URL) {
+//     // Database is JawsDB on Heroku
+//     connection = mysql.createConnection(process.env.JAWSDB_URL);
+// } else {
+//     // Database is local
+//     connection = mysql.createConnection({
+//         port: 3306,
+//         host: 'localhost',
+//         user: 'root',
+//         password: 'password',
+//         database: 'moorhouseROI'
+//     })
 // };
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+};
 
 const db = require('./models');
 
 require('./routes/api-routes')(app);
 
 // Serve up static assets (usually on heroku)
-// if (process.env.JAWSDB_URL === "production") {
-//     app.use(express.static("client/build"));
-//   }
+if (process.env.JAWSDB_URL === "production") {
+    app.use(express.static("client/build"));
+  }
   
   // Define API routes here
   require("./routes/api-routes.js")(app);
