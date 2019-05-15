@@ -94,18 +94,18 @@ module.exports = function(app) {
         })
     });
 // UPDATE Route for the View Page
-    app.put('/api/update:id', function(req, res) {
-        db.Moorhouses.update({
-            planSelect: req.body.planSelect,
-        }, {
-            where: {
-                id: req.params.id
-            }
-        })
-        .then(function(dbData) {
-            res.json(dbData)
-        })
-    });
+    // app.put('/api/update:id', function(req, res) {
+    //     db.Moorhouses.update({
+    //         planSelect: req.body.planSelect,
+    //     }, {
+    //         where: {
+    //             id: req.params.id
+    //         }
+    //     })
+    //     .then(function(dbData) {
+    //         res.json(dbData)
+    //     })
+    // });
 // Get Route for Dashboard that will display the Number of Records in the Database coded with "Opportunity"
     app.get('/api/dashboard/number-of-opps', function(req, res) {
         db.Moorhouses.findAll({

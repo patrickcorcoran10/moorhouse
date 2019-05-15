@@ -32,9 +32,9 @@ const db = require('./models');
 require('./routes/api-routes')(app);
 
 // Serve up static assets (usually on heroku)
-if (process.env.JAWSDB_URL === "production") {
-    app.use(express.static("client/build"));
-  }
+// if (process.env.JAWSDB_URL === "production") {
+//     app.use(express.static("client/build"));
+//   }
   
   // Define API routes here
   require("./routes/api-routes.js")(app);

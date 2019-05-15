@@ -9,7 +9,7 @@ import axios from 'axios';
         super(props)
         this.state = {
             inputs: {},
-            planSelect: '',
+            // planSelect: '',
         };
     }
 
@@ -33,7 +33,7 @@ import axios from 'axios';
     
     const style = {
         container: {
-            paddingTop: '80px'
+            // paddingTop: '80px'
         }
     };
     const assumptions = {

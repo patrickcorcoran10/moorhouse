@@ -10,6 +10,7 @@ export default class View extends Component {
       inputs: {},
     };
     console.log(this.state)
+    this.ROI = this.ROI.bind(this);
   };
 
   componentWillMount() {
@@ -33,11 +34,6 @@ export default class View extends Component {
   };
 
   render() {
-    const style = {
-      container: {
-        // paddingTop: '80px'
-      }
-    };
     const assumptions = {
       emailCostPerEmployee: 1800,
       chanceOfDataBreach: .025,
@@ -48,9 +44,7 @@ export default class View extends Component {
     };
     console.log(this.state)
     return (
-      <div 
-      // style={style.container} 
-      className='container'>
+      <div className='container'>
         <div className="row" id="header">
           <div className='col-md-3'>
           </div>
@@ -59,6 +53,7 @@ export default class View extends Component {
               <p>{this.state.inputs.companyName}</p>
               <p>Client Email: {this.state.inputs.email}</p>
               <p>Plan Selection: {(this.state.inputs.planSelect === '8') ? <p>Standard Plan</p> : <p>Plus Plan</p>} </p>
+              <button value={this.state.inputs.id} onClick={this.ROI}>View {this.state.inputs.companyName} Display</button>
           </div>
           <div className='col-md-3'>
           </div>

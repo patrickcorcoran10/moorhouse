@@ -20,7 +20,6 @@ export default class Opps extends Component {
   
   componentWillMount() {
     console.log("We are now mounted on the Opps page");
-    
     request
       .get('/api/opps')
       .then(res => {
@@ -48,12 +47,9 @@ export default class Opps extends Component {
     var deleteID = e.target.value;
     console.log(deleteID);
     axios.delete('/api/delete'+deleteID)
-    .then((response) => {
+    .then(res => {
       this.componentWillMount();
     })
-    .catch(function(err) {
-      console.log(err)
-    });
     alert('You have deleted a record.')
   };
 
@@ -70,76 +66,35 @@ export default class Opps extends Component {
     console.log('we are updating this record to complete');
     let updateID = e.target.value;
     console.log(updateID);
-    axios.put('/api/opps/complete'+ updateID, {
+    axios.put('/api/opps-complete'+ updateID, {
       completed: true
     })
     .then(function(response) {
       console.log(response);
-      request
-      .get('/api/opps')
-      .then(res => {
-          this.setState({
-            inputsOpps:  res.body 
-          })
-      })
-      .catch(err => {
-          console.log(err)
-      });
-    request
-      .get('/api/opps-completed')
-      .then(res => {
-        console.log(res);
-        this.setState({
-            inputsCompleted: res.body
-        })
-        this.componentWillMount()
-      })
-      .catch(err => {
-        console.log(err)
-      });
+      this.componentWillMount();
     })
-    .catch(function(error) {
-      console.log(error)
+    .catch(function(err) {
+      console.log(err)
     });
-    alert("This Record is Now Completed.")
+    alert("This Record is Now Completed.");
   };
 
   notComplete = e => {
     e.preventDefault();
     console.log('We are moving this record from the complete list to the not yet complete list.', e.target.value);
-    let updateID = e.target.value;
-    console.log(updateID);
-    axios.put('/api/opps-notComplete' + updateID, {
+    let notCompleteID = e.target.value;
+    console.log(notCompleteID);
+    axios.put('/api/opps-notComplete' + notCompleteID, {
       completed: false
     })
     .then(function(response) {
       console.log(response);
-      request
-      .get('/api/opps')
-      .then(res => {
-          this.setState({
-            inputsOpps:  res.body 
-          })
-      })
-      .catch(err => {
-          console.log(err)
-      });
-    request
-      .get('/api/opps-completed')
-      .then(res => {
-        this.setState({
-            inputsCompleted: res.body
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      });
+      this.componentWillMount();
     })
-    .catch(function(error) {
-      console.log(error)
+    .catch(err => {
+      console.log(err)
     });
     alert("This Record has been moved to the Currently Opportunities list.")
-    this.componentWillMount();
   };
 
   render() {
@@ -205,9 +160,11 @@ export default class Opps extends Component {
                   <td>{data.totalEmployees}</td>
                   {(data.planSelect === '8') ? <td>Standard</td> : <td>Plus</td>}
                   <td>${data.potentialRevenue}</td> 
-                  <td><span type="button"  role='img' aria-label="chart" className="btn btn-outline-dark" value={data.id} onClick={this.view.bind(this)}>&#128202;</span></td>
-                  <td><span type="button" role='img' aria-label="reverse" className="btn btn-outline-success" value={data.id} onClick={this.notComplete.bind(this)}>&#128257;</span></td>
-                  <td><button  className="btn btn-outline-danger" value={data.id} onClick={this.delete.bind(this)}> X </button></td> 
+                  {/* eslint-disable-next-line */}
+                  <td><button type="button"  role='img' aria-label="chart" className="btn btn-outline-dark" value={data.id} onClick={this.view}>&#128202;</button></td>
+                  {/* eslint-disable-next-line */}
+                  <td><button type="button" role='img' aria-label="reverse" className="btn btn-outline-success" value={data.id} onClick={this.notComplete}>&#128257;</button></td>
+                  <td><button  className="btn btn-outline-danger" value={data.id} onClick={this.delete}> X </button></td> 
                 </tr>
                 ))}
               </tbody>
