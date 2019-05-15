@@ -87,7 +87,7 @@ export default class View extends Component {
               <p>${this.state.inputs.avgCostPerEmployee}</p>             
               <p>${((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * parseInt(this.state.inputs.avgCostPerEmployee)}</p>
               <p>{this.state.inputs.collectingData}</p>
-              <strong>${this.state.inputs.collectingData*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.avgCostPerEmployee))}</strong>
+              <strong>${(this.state.inputs.collectingData*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.avgCostPerEmployee))).toFixed(2)}</strong>
             </div>
           </div>
         </div>
@@ -123,7 +123,7 @@ export default class View extends Component {
               <p>${this.state.inputs.avgCostPerEmployee}</p>
               <p>${parseInt(this.state.inputs.avgCostPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours))}</p>
               <p>{this.state.inputs.analyzingData}</p>
-              <strong>${this.state.inputs.analyzingData * parseInt(this.state.inputs.avgCostPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours))}</strong>
+              <strong>${(this.state.inputs.analyzingData * parseInt(this.state.inputs.avgCostPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours))).toFixed(2)}</strong>
             </div>
           </div>
         </div>
@@ -151,7 +151,7 @@ export default class View extends Component {
               <p>{assumptions.chanceOfDataBreach}</p>
               <p>{assumptions.dataBreachCost * assumptions.chanceOfDataBreach}</p>
               <p>{this.state.inputs.dataBreachRisk}</p>
-              <strong>${this.state.inputs.dataBreachRisk * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach)}</strong>
+              <strong>${(this.state.inputs.dataBreachRisk * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach)).toFixed(2)}</strong>
             </div>
           </div>
         </div>
@@ -179,7 +179,7 @@ export default class View extends Component {
               <p>${assumptions.emailCostPerEmployee}</p>
               <p>${this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee}</p>
               <p>{this.state.inputs.avgEmails}</p>
-              <strong>${this.state.inputs.avgEmails * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee)}</strong>
+              <strong>${(this.state.inputs.avgEmails * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee)).toFixed(2)}</strong>
             </div>
           </div>
         </div>

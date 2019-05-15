@@ -47,7 +47,7 @@ import axios from 'axios';
     console.log(this.state.inputs.companyName);
     return (
          <div className='container' style={style.container}>
-            <div className='row'>
+            {/* <div className='row'>
                 <div className='col-md-1'>
                 </div>
                 <div className='col-md-10'>
@@ -56,7 +56,7 @@ import axios from 'axios';
                 <div className='col-md-1'>
                 </div>
             </div>
-            <hr/>
+            <hr/> */}
             <div className='row'>
                 <div className='col-md-1'>
                 </div>
@@ -93,7 +93,7 @@ import axios from 'axios';
                             options={{
                                 title: {
                                     display: true,
-                                    text: 'Savings by Value Lever',
+                                    text: 'Savings by Value Lever for ' + this.state.inputs.companyName,
                                     fontSize: 25
                                 },
                                 legend: {
@@ -111,12 +111,12 @@ import axios from 'axios';
                 <div className='col-md-1'>
                 </div>
                 <div className='col-md-10' id='numbers'>
-                    <strong>Annual Subscription Cost: ${parseInt(this.state.inputs.planSelect) * 12 * this.state.inputs.totalEmployees}</strong>
+                    <strong>Annual Subscription Cost: ${(parseInt(this.state.inputs.planSelect) * 12 * this.state.inputs.totalEmployees).toFixed(2)}</strong>
                     <p>Data Collection Savings: ${this.state.inputs.collectingData*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.avgCostPerEmployee))}</p>
-                    <p>Data Processsing Savings: ${this.state.inputs.analyzingData * parseInt(this.state.inputs.avgCostPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours))}</p>
-                    <p>Complience and Security Savings: ${this.state.inputs.dataBreachRisk * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach)}</p>
-                    <p>Automation Savings: ${this.state.inputs.avgEmails * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee)}</p>
-                    <strong>Annual BotCo Value: ${(this.state.inputs.avgEmails * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee))+(this.state.inputs.dataBreachRisk * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(this.state.inputs.analyzingData * parseInt(this.state.inputs.avgCostPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours)))+(this.state.inputs.collectingData*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.avgCostPerEmployee)))}</strong>
+                    <p>Data Processsing Savings: ${this.state.inputs.analyzingData * parseInt(this.state.inputs.avgCostPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours)).toFixed(2)}</p>
+                    <p>Complience and Security Savings: ${this.state.inputs.dataBreachRisk * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach).toFixed(2)}</p>
+                    <p>Automation Savings: ${this.state.inputs.avgEmails * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee).toFixed(2)}</p>
+                    <strong>Annual BotCo Value: ${(this.state.inputs.avgEmails * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee))+(this.state.inputs.dataBreachRisk * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(this.state.inputs.analyzingData * parseInt(this.state.inputs.avgCostPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours)))+(this.state.inputs.collectingData*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.avgCostPerEmployee))).toFixed(2)}</strong>
                     <hr/>
                     <strong>ROI: {(((this.state.inputs.avgEmails * (this.state.inputs.totalEmployees * assumptions.emailCostPerEmployee))+(this.state.inputs.dataBreachRisk * (assumptions.dataBreachCost * assumptions.chanceOfDataBreach))+(this.state.inputs.analyzingData * parseInt(this.state.inputs.avgCostPerEmployee) * (this.state.inputs.totalEmployees * (assumptions.processData * assumptions.annualHours)))+(this.state.inputs.collectingData*((assumptions.collectData * assumptions.annualHours) * parseInt(this.state.inputs.totalEmployees)) * (parseInt(this.state.inputs.avgCostPerEmployee))))/(this.state.inputs.planSelect * 12 * this.state.inputs.totalEmployees)).toFixed(2)}%</strong>
                 </div>

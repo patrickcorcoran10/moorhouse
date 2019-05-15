@@ -144,16 +144,6 @@ export default class Dashboard extends Component {
     return (
       <div className='container'>
         <div className='row'>
-            <div className='col-md-4'>
-            </div>
-            <div className='col-md-4'>
-                <p>Dashboard</p>  
-                
-            </div>
-            <div className='col-md-4'>
-            </div>
-        </div>
-        <div className='row'>
             <div className='col-md-1'>
 
             </div>
